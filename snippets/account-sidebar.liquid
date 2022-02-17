@@ -1,0 +1,25 @@
+<div class="account__sidebar">
+
+    <div class="account__sidebar-head">
+        <a href="#update-avatar" class="js-show-avatar-popup account-menu__avatar">
+            {%- render 'avatar-image' -%}
+        </a>
+        <div>
+            <div>
+                <p>{{ customer.name }}</p>
+            </div>
+            <div class="account__links">
+                <a class="js-show-avatar-popup" href="#update-avatar">Update avatar</a>
+                <a class="link-sign-out" href="{{ shop.url }}/account/logout"><i class="far fa-sign-out"></i> Sign Out</a>
+            </div>
+        </div>
+    </div>
+
+    <nav>
+        <a class="{%- if template == "customers/account" %} active {% endif -%}" href="/account">My account</a>
+        <a class="{%- if template == "customers/addresses" %} active {% endif -%}" href="/account/addresses">My addresses</a>
+        <a class="{%- if template contains "wishlist" %} active {% endif -%}" href="/pages/my-wishlist">My wishlist</a>
+        <a class="{%- if template contains "rewards" %} active {% endif -%}" href="/pages/rewards">My Points</a>
+        <a href="/">Return to store</a>
+    </nav>
+</div>

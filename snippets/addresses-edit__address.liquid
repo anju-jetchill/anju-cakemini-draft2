@@ -1,0 +1,50 @@
+<div id="edit-address_{{address.id}}" class="edit-address">
+    {% form 'customer_address', address, class: "edit-address__form customer-form" %}
+    <h3>Shipping Address</h3>
+    <div class="address-form__fields">
+        <label class="field--text">
+            <input type="text" name="address[first_name]" onkeyup="this.setAttribute('value', this.value);" value="{{ form.first_name }}" placeholder="First Name" />
+        </label>
+
+        <label class="field--text">
+            <input type="text" name="address[last_name]" onkeyup="this.setAttribute('value', this.value);" value="{{ form.last_name }}" placeholder="Last Name" />
+        </label>
+
+        <label class="field--text">
+            <input type="text" name="address[company]" onkeyup="this.setAttribute('value', this.value);" value="{{ form.company }}" placeholder="Company" />
+        </label>
+
+        <label class="field--text">
+            <input type="text" name="address[address1]" onkeyup="this.setAttribute('value', this.value);" value="{{ form.address1 }}" placeholder="Address 1" />
+        </label>
+
+        <label class="field--text">
+            <input type="text" name="address[address2]" onkeyup="this.setAttribute('value', this.value);" value="{{ form.address2 }}" placeholder="Address 2" />
+        </label>
+
+        <label class="field--text">
+            <input type="text" name="address[city]" onkeyup="this.setAttribute('value', this.value);" value="{{ form.city }}" placeholder="City" />
+        </label>
+
+        <label class="field--select">
+            <select id="address_country_{{address.id}}" name="address[country]" data-default="{{form.country}}">{{ country_option_tags }}</select>
+        </label>
+
+        <label class="field--select" id="address_province_container_{{address.id}}" style="display:none">
+            <select id="address_province_{{address.id}}" class="address_form" name="address[province]" data-default="{{form.province}}"></select>
+        </label>
+
+        <label class="field--text">
+            <input type="text" name="address[zip]" onkeyup="this.setAttribute('value', this.value);" value="{{ form.zip }}" placeholder="Postal Code" />
+        </label>
+
+        <label class="field--text">
+            <input type="tel" name="address[phone]" onkeyup="this.setAttribute('value', this.value);" value="{{ form.phone }}" placeholder="Phone Number" />
+        </label>
+
+        <label class="faux-checkbox">{{ form.set_as_default_checkbox }}Set as Default Address?</label>
+
+        <button class="btn btn--green" type="submit">Save</button>
+    </div>   
+    {% endform %}
+</div>

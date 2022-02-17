@@ -1,0 +1,130 @@
+{%- liquid
+    if variant.title
+      assign compare_at_price = variant.compare_at_price
+      assign price = variant.price
+      assign available = variant.available
+    else
+      assign compare_at_price = product.compare_at_price
+      assign price = product.price
+      assign available = true
+    endif
+
+    assign money_price = price | money
+-%}
+
+{%- assign is_pre_order_product = false -%}
+{%- if product.tags contains "preorder" -%}{%- assign is_pre_order_product = true -%}{%- endif -%}    
+{%- for variant in product.variants -%}
+    {%- if variant.inventory_quantity <= 0 -%}
+        {%- assign is_pre_order_product = true -%}
+    {%- endif -%}
+{%- endfor -%}
+
+{%- assign preorder_disallow_list = settings.preorder_product_type_disallow_list | strip | split: ',' | downcase -%}
+{%- assign _product_type = product.type | strip | downcase -%}
+{%- if preorder_disallow_list contains _product_type -%}
+    {%- assign is_pre_order_product = false -%}
+{%- endif -%}
+
+<div class="card-product
+    {%- if available == false %} price--sold-out{% endif %}
+    {%- if compare_at_price > price %} price--on-sale{% endif %}
+    {%- if customer -%} card-product--hasWishlistButton{%- endif -%}
+    ">
+
+    <div class="card-product__wrap">
+
+        {%- if isWishlistItem -%}
+            <button class="btn btn--circle btn__remove-item" data-product-handle="{{ product.handle }}">{%- render 'svg.cross' -%}</button>
+        {%- endif -%}
+
+        <div class="card-product__image">
+
+            {%- if settings.preorderTagsActive -%}
+                {%- if is_pre_order_product -%}
+                    <div class="tag tag--preorder">Pre-order</div>
+                {%- endif -%}
+            {%- endif -%}
+
+            {%- capture product_url -%}
+                {%- assign product_url = "" -%}
+                {%- assign lc_product_type            = product.type | downcase -%}
+                {%- assign lc_bundle_product_type_1   = settings.bundle_product_type_1 | downcase -%}
+                {%- assign lc_bundle_product_type_2   = settings.bundle_product_type_2 | downcase -%}
+                {%- if lc_product_type == lc_bundle_product_type_1 -%}
+                    {%- assign product_url = "/collections/" | append: settings.bundle_collection_1.handle -%}
+                {%- elsif lc_product_type == lc_bundle_product_type_2 -%}
+                    {%- assign product_url = "/collections/" | append: settings.bundle_collection_2.handle -%}
+                {%- endif -%}
+                
+                {%- assign product_url = product_url | replace: ' ', '' | strip_newlines -%}
+
+                {%- if product_url == "" -%}
+                    {%- assign product_url = product.url -%}
+                {%- endif -%}
+
+                {{ product_url }}
+            {%- endcapture -%}
+            
+            <a href="{{ product_url }}">
+                {%- render 'image-responsive', image : product.images[0], custom_class : "card-product__front", custom_alt : product.title, custom_crop : "center" -%}
+            </a>
+
+            {%- assign bundle_product_type_1 = settings.bundle_product_type_1 | downcase | strip -%}
+            {%- assign bundle_product_type_2 = settings.bundle_product_type_2 | downcase | strip -%}
+            {%- assign lc_product_type = product.type | downcase | strip -%}
+
+            {%- unless bundle_product_type_1 == lc_product_type or bundle_product_type_2 == lc_product_type -%}
+            <div class="quick-buy">
+                <div class="quick-buy__wrap">
+                    {%- if product.available or is_pre_order_product == true -%}
+                        {%- if isWishlistItem -%}
+                            <button class="btn btn--green quick-buy__add-to-basket" data-quantity="1" data-variant-id="{{ product.selected_or_first_available_variant.id }}" data-product-handle="{{ product.handle }}">MOVE TO BASKET</button>
+                        {%- else -%}
+
+                            {%- assign buttonText = "ADD TO BASKET" -%}
+                            {%- if is_pre_order_product -%}
+                                {%- assign buttonText = "PRE-ORDER" -%}
+                            {%- endif -%}
+
+                            <button class="btn btn--green quick-buy__add-to-basket" data-quantity="1" data-variant-id="{{ product.selected_or_first_available_variant.id }}">{{ buttonText }}</button>
+
+                            {%- if customer -%}
+                                {%- assign wishlist_tag = "WISHLIST_" | append: product.handle -%}
+
+                                <button class="icon icon--hover-circle icon-wishlist {%- if customer.tags contains wishlist_tag %} active{%- endif -%}" aria-label="Add or remove item on wishlist" data-product-handle="{{ product.handle }}">
+                                    <i class="far fa-heart"></i>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            {%- endif -%}
+                        {%- endif -%}
+                    {%- else -%}
+                        <button class="btn btn--grey quick-buy__add-to-basket">SOLD OUT</button>
+                    {%- endif -%}
+                </div>
+            </div>
+            {%- endunless -%}
+
+
+        </div>
+
+        <div class="card-product__body">
+            <h3>{{ product.title }}</h3>
+            <div class="card-product__options">
+                {%- for option in product.options_with_values -%}
+                    {%- unless option.name == "Title" -%}
+                        <p>
+                            <strong>{{ option.name }}:</strong>
+                            {%- for value in option.values -%}{% if option.selected_value == value %}<span>{{ value }}</span>{% endif %}{%- endfor -%}
+                        </p>
+                    {%- endunless -%}
+                {%- endfor -%}
+            </div>
+            <div class="card-product__price">
+                <div class="prices">
+                    {%- render 'product-price', compare_at_price : compare_at_price, price : price, money_price : money_price, product : product -%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

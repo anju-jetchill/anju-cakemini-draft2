@@ -1,0 +1,43 @@
+{%- capture prices -%}
+    <div class="cart-item__prices">
+        <p class="cart-item__price">{{ line_item.final_line_price | money }} {%- if settings.loyaltyLionCartPointsText != blank-%}<br/><span data-lion-points-for="{{ line_item.final_line_price }}"></span> {{ settings.loyaltyLionCartPointsText }}{%- endif -%}</p>
+    </div>
+{%- endcapture -%}
+
+<div class="cart-item cart-item-{{ line_item.id }}">
+    <div class="cart-item__wrap">
+        <a class="cart-item__image" href="{{ line_item.url }}">
+            {%- render 'image-responsive', image : line_item.image, custom_class : "card-product__front", custom_alt : product.title -%}
+        </a>
+        <div class="cart-item__body">
+            <div class="cart-item__title">
+                <h3>{{ line_item.title }}</h3>
+                <div class="cart-item__prices-1">
+                    {{ prices }}
+                </div>
+            </div>
+            <div class="cart-item__variants">
+                {%- for product_option in line_item.options_with_values -%}
+                    {%- unless product_option.name == "Title" -%}
+                        <p>
+                            <span class="cart-item__variants-name">{{ product_option.name }}:</span>
+                            <span class="cart-item__variants-value">{{ product_option.value }}</span>
+                        </p>
+                    {%- endunless -%}
+                {%- endfor -%}
+            </div>
+            <div class="cart-item__prices-2">
+                {{ prices }}
+            </div>
+            <div class="quantity">
+                <button class="quantity__minus" data-qty-variant-id="{{ line_item.id }}" type="button" aria-label="Decrease quantity">-</button>
+                <label for="qty_{{ line_item.id | handleize }}" aria-label="Quantity">
+                    <input name="quantity" id="qty_{{ line_item.id | handleize }}" type="number" pattern="[0-9]*" max="10" disabled="" value="{{ line_item.quantity }}">
+                </label>
+                <button class="quantity__plus" data-qty-variant-id="{{ line_item.id }}" type="button" aria-label="Increase quantity">+</button>
+            </div>
+
+            <p class="cart-item__remove" data-quantity="0" data-variant-id="{{ line_item.id }}"->Remove</p>
+        </div>
+    </div>
+</div>

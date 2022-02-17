@@ -1,0 +1,16 @@
+{%- paginate customer.addresses by 10 -%}
+    <div class="address-list">
+
+        {%- for address in customer.addresses -%}
+            {%- if address == customer.default_address -%}
+                {%- render 'addresses-list__card', address : address -%}
+            {%- endif -%}
+        {%- endfor -%}
+
+        {%- for address in customer.addresses -%}
+            {%- unless address == customer.default_address -%}
+                {%- render 'addresses-list__card', address : address -%}
+            {%- endunless -%}
+        {%- endfor -%}
+    </div>
+{%- endpaginate -%}

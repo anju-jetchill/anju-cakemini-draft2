@@ -1,0 +1,14 @@
+<nav class="blog-tag-navigation">
+    <ul>
+        <li {%- if blog.handle == 'news' and current_tags == blank %} class="active"{% endif %}><a href="/blogs/news/">News</a></li>
+        {% for tag in blog.all_tags %}
+            {% assign class = "" %}
+            {%- if current_tags contains tag -%}{% assign class = 'active' %}{%- endif -%}
+            {%- if current_tags.first == tag  -%}
+            <li class="{{ class }}">{{ tag | link_to_remove_tag: tag }}</li>
+            {%- else -%}
+            <li class="{{ class }}">{{ tag | link_to_tag: tag }}</li>
+            {%- endif -%}
+        {% endfor %}
+    </ul>
+</nav>

@@ -1,0 +1,21 @@
+<div class="address-card {% if address == customer.default_address -%}address-card--default{%- endif -%}" onclick="AddressEdit.show('{{ address.id }}')">
+    <div class="address-card__wrap">
+        {%- if address == customer.default_address -%}
+            <div class="address-card__head">
+                <span><i class="far fa-check"></i> Default</span>
+            </div>
+        {%- endif -%}
+        
+        <div class="address-card__content">
+            <p><strong>{{ address.street }}</strong></p>
+            <p>{{ address.first_name }} {{address.last_name }}</p>
+            <p>{{ address.company }}</p>
+            <p>{{ address.city }} {%- if address.province_code -%}, {{ address.province_code }}{%- endif -%}</p>
+            <p>{{ address.country }} {{ address.zip }}</p>
+            <p>{{ address.phone }}</p>
+        </div>
+        <div class="address-card__foot">
+            <a href="#edit-form" onclick="AddressEdit.show('{{ address.id }}')">Edit</a>
+        </div>
+    </div>
+</div>

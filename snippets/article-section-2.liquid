@@ -1,0 +1,20 @@
+<div class="article-section-2">
+    <div class="article-section-2__wrap article-section-2--reverse">
+        <div class="article-section-2__column">
+            {%- if block.settings.imageDesktop != blank -%}
+                {%- render 'image-responsive', image : block.settings.imageDesktop, custom_class : "", custom_alt : block.settings.title -%}
+            {%- endif -%}
+        </div>
+        <div class="article-section-2__column article-section-2--text">
+            <div class="article-section-2__column-wrap">
+                {%- if block.settings.title != blank -%}
+                    <h2>{{ block.settings.title }}</h2>
+                {%- endif -%}
+
+                {%- if block.settings.text != blank -%}
+                    <div class="article-section-2__text">{{ block.settings.text }}</div>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>

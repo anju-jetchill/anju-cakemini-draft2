@@ -1,0 +1,42 @@
+{%- if customer -%}
+    <div class="avatar-curtain js-hide-avatar-popup"></div>
+    <div class="avatar-popup">
+
+        <div class="avatar-popup__wrap">
+            
+            <div class="avatar-popup__content">
+                <button class="btn-close js-hide-avatar-popup" aria-label="Close">{%- render 'svg.cross' -%}</button>
+
+                <div class="avatar-popup__body">
+
+                    {%- if settings.avatarPopupTitle != blank -%}
+                        <h2>{{ settings.avatarPopupTitle }}</h2>    
+                    {%- endif -%}
+
+                    {%- if settings.avatarPopupText != blank -%}
+                        {{ settings.avatarPopupText }}
+                    {%- endif -%}
+
+                    <div class="avatar-popup__list">
+        
+                        {%- capture avatarIndex -%}{%- render 'avatar-image', getIndex : true -%}{%- endcapture -%}
+                        {%- assign avatarIndex = avatarIndex | plus: 0 -%}{%- comment -%}Convert to integer{%- endcomment -%}
+                        {%- if avatarIndex == 0 -%}{%- assign avatarIndex = 1 -%}{%- endif -%}
+                        {%- for index in (1..6) -%}
+                            {%- capture avatarImage -%}avatar{{ index }}Image{%- endcapture -%}
+
+                            <div class="avatar-popup__item">
+                                <div class="avatar-popup__image">
+                                    <img class="lazyload {% if forloop.index == avatarIndex %}active{% endif %}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ settings[avatarImage] | img_url: '250x250' }}" alt="Avatar {{ index }}" data-img-id="{{ index }}" data-old-img-id="{{ index }}">
+                                </div>
+                            </div>
+                        {%- endfor -%}
+                    </div>
+                    <div class="avatar-popup__actions">
+                        <button class="btn btn--green" id="btn-avatar-update" onclick="Avatar.updateAvatar();" data-old-img-id="{{ avatarIndex }}">UPDATE AVATAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%- endif -%}

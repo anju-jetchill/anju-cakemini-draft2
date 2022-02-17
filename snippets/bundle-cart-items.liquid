@@ -1,0 +1,69 @@
+
+{%- comment -%}ITEM BUNDLES{%- endcomment -%}
+{%- assign bundles_comma_list = "" -%}
+{%- for line_item in cart.items -%}
+    {%- if line_item.properties._bundle_id == blank -%}{%- continue -%}{%- endif -%}
+    
+    {%- unless bundles_comma_list contains line_item.properties._bundle_id  -%}
+        {% assign bundles_comma_list = bundles_comma_list | append: line_item.properties._bundle_id | append: ','  %}
+        
+    {%- endunless -%}
+{% endfor %}
+
+
+{%- assign bundles_array = bundles_comma_list | split: ',' -%}
+
+{%- for bundle_id in bundles_array -%}
+    {%- assign bundle_variants      = "" -%}
+    {%- assign bundle_title         = "" -%}
+    {%- assign bundle_threshold     = "" -%}
+    {%- assign bundle_price         = 0  -%}
+    {%- assign bundle_item_quantity = 0  -%}
+    {%- assign bundle_items_titles  = "" -%}
+
+    {%- for line_item in cart.items -%}
+        {%- unless line_item.properties._bundle_id != blank -%}{%- continue -%}{%- endunless -%}
+        
+        {%- if bundle_id contains line_item.properties._bundle_id -%}
+            {%- assign bundle_item_quantity = bundle_item_quantity | plus: line_item.quantity -%}
+            {%- assign bundle_title         = line_item.properties._bundle_title -%}
+            {%- assign bundle_threshold     = line_item.properties._bundle_threshold -%}
+            {%- assign bundle_variants      = bundle_variants | append: line_item.variant_id | append: ',' -%}
+            {%- assign bundle_price         = bundle_price | plus: line_item.final_line_price -%}
+            {%- assign bundle_items_titles  = bundle_items_titles | append: 'x' | append: line_item.quantity | append: ' ' | append: line_item.product.title | append: ',' -%}
+            {%- assign bundle_image = line_item.image -%}
+        {%- endif -%}
+        
+    {%- endfor -%}
+
+    {%- comment -%}BUNDLE CART ITEM HTML{%- endcomment -%}
+    <div class="cart-item cart-item-{{ bundle_id }} cart-bundle-item">
+        <input type="hidden" id="bundle-item-{{ bundle_id }}" value="{{ bundle_variants }}">
+        <div class="cart-item__wrap">
+            <div class="cart-item__image">
+                {%- render 'image-responsive', image : bundle_image, custom_class : "card-product__front", custom_alt : bundle_title -%}
+                <span class="cart-bundle-item-quantity" aria-label="{{ bundle_item_quantity }} items">{{ bundle_item_quantity }}</span>
+            </div>
+            <div class="cart-item__body">
+                <div class="cart-item__title">
+                    <h3>x{{ bundle_threshold }} Items - {{ bundle_title }}</h3>
+                    <div class="cart-item__prices-1">
+                        <div class="cart-item__prices">
+                            <p class="cart-item__price">{{ bundle_price | money }} {%- if settings.loyaltyLionCartPointsText != blank-%}<br/><span data-lion-points-for="{{ bundle_price }}"></span> {{ settings.loyaltyLionCartPointsText }}{%- endif -%}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-item__variants">
+                    {%- assign bundle_items_titles = bundle_items_titles | split: ',' -%}
+                    {%- for bundle_item_title in bundle_items_titles -%}
+                        <p>
+                            <span class="cart-item__variants-name">{{ bundle_item_title }}</span>
+                        </p>
+                    {%- endfor -%}
+                </div>
+                <p class="cart-item__remove js-bundle-remove" data-bundle-id="{{ bundle_id }}">Remove</p>
+            </div>
+        </div>
+    </div>
+
+{%- endfor -%}

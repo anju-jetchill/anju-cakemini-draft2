@@ -1,0 +1,23 @@
+{%- capture avatarImage -%}
+    {%- if customer -%}
+        {%- for tag in customer.tags -%}
+            {%- unless tag contains "AVATAR_" %}{% continue %}{% endunless -%}
+            {%- assign avatarIndex = tag | remove: "AVATAR_" -%}
+            {%- break -%}
+        {%- endfor -%}
+
+        {%- if avatarIndex -%}
+            avatar{{ avatarIndex }}Image
+        {%- else -%}
+            avatarDefaultImage
+        {%- endif -%}
+    {%- else -%}
+        avatarDefaultImage
+    {%- endif -%}
+{%- endcapture -%}
+
+{%- if getIndex -%}
+    {{ avatarIndex }}        
+{%- else -%}
+    <img class="avatar lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ settings[avatarImage] | img_url: '50x' }}" alt="Avatar">
+{%- endif -%}

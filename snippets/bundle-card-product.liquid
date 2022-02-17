@@ -1,0 +1,68 @@
+{%- liquid
+    if variant.title
+        assign compare_at_price = variant.compare_at_price
+        assign price = variant.price
+        assign available = variant.available
+    else
+        assign compare_at_price = product.compare_at_price
+        assign price = product.price
+        assign available = true
+    endif
+
+    assign money_price = price | money
+-%}
+{%- assign isPreOrder = false -%}
+{%- if product.tags contains "preorder" -%}{%- assign isPreOrder = true -%}{%- endif -%}    
+
+<div id="product-card__{{ product.selected_or_first_available_variant.id }}" class="card-product
+    {%- if available == false %} price--sold-out{% endif %}
+    {%- if compare_at_price > price %} price--on-sale{% endif %}
+    ">
+    <input id="js-product-{{ product.selected_or_first_available_variant.id }}" type="hidden"
+        data-product-price="{{ product.price }}"
+        data-product-id="{{ product.selected_or_first_available_variant.id }}"
+        data-product-title="{{ product.title }}"
+        data-product-url="{{ product.url }}"
+        data-product-img-src="{{ product.images[0] | img_url : '400x' }}"
+    >
+    <div class="bundle-quantity-btn">
+        <div class="bundle-quantity-btn__wrap">
+            <button class="bundle-quantity-btn__minus" type="button"></button>
+            <input type="text" class="bundle-quantity-btn__qty" value="0" disabled data-product-input-id="js-product-{{ product.selected_or_first_available_variant.id }}">
+            <button class="bundle-quantity-btn__add" type="button"></button>
+        </div>
+    </div>    
+
+    <button class="bundle-quick-view__trigger js-bundle-quick-view-trigger" type="button" aria-label="Quick view {{ product.title }}" data-product-input-id="js-product-{{ product.selected_or_first_available_variant.id }}"><span>i</span></button>
+
+    <div class="card-product__wrap">
+        <div class="card-product__image js-bundle-quick-view-trigger" data-product-input-id="js-product-{{ product.selected_or_first_available_variant.id }}">
+            {%- if settings.preorderTagsActive -%}
+                {%- if isPreOrder -%}
+                    <div class="tag tag--preorder">Pre-order</div>
+                {%- endif -%}
+            {%- endif -%}
+            <div>
+                {%- render 'image-responsive', image : product.images[0], custom_class : "card-product__front", custom_alt : product.title, custom_crop : "center" -%}
+            </div>
+        </div>
+
+        <div class="card-product__body">
+            <h3>{{ product.title }}</h3>
+            <div class="card-product__options">
+                {%- for option in product.options_with_values -%}
+                    {%- unless option.name == "Title" -%}
+                        <p><strong>{{ option.name }}:</strong>
+                            {%- for value in option.values -%}{% if option.selected_value == value %}<span>{{ value }}</span>{% endif %}{%- endfor -%}
+                        </p>
+                    {%- endunless -%}
+                {%- endfor -%}
+            </div>
+            <div class="card-product__price">
+                <div class="prices">
+                    {%- render 'product-price', compare_at_price : compare_at_price, price : price, money_price : money_price, product : product -%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

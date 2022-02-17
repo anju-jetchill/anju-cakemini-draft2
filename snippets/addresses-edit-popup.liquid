@@ -1,0 +1,34 @@
+<div class="address-popup"  id="edit-address">
+    <div class="address-popup__curtain" onclick="AddressEdit.hide();"></div>
+    <div class="address-popup__wrap">
+        <div class="address-popup__content">
+            <div class="address-popup__head">
+                <h2>Edit Address</h2>
+                <button class="address-popup__close" onclick="AddressEdit.hide();">{%- render 'svg.cross' -%}</button>
+            </div>
+
+            <div class="address-form">
+                {%- for address in customer.addresses -%}
+                    {%- render 'addresses-edit__address', address: address -%}
+                {%- endfor -%}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.AddressEdit = {
+
+        visibleClass : 'edit-address-popup--isVisible',
+
+        show : function(addressID) {
+            document.documentElement.classList.add(AddressEdit.visibleClass);
+            document.getElementById('edit-address_' + addressID).classList.add('isVisible');
+        },
+
+        hide : function() {
+            document.documentElement.classList.remove(AddressEdit.visibleClass);
+            document.querySelector('.edit-address.isVisible').classList.remove('isVisible');
+        }
+    }
+</script>

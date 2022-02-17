@@ -1,0 +1,46 @@
+<div class="cart-drawer">
+    <div class="cart-drawer__curtain" onclick="CartDrawer.hide();"></div>
+    <div class="cart-drawer__drawer">
+        <div class="cart-drawer__head">
+            <button class="cart-drawer__close icon icon--hover-circle icon-cart" aria-label="Close" onclick="CartDrawer.hide();">{%- render 'svg.cross' -%}</button>
+            {%- if settings.cartDrawerTitle != blank -%}
+                <span class="h2">{{ settings.cartDrawerTitle }}</span>
+            {%- endif -%}
+        </div>
+        <div class="cart-drawer__body">
+
+            <div class="cart-items">
+                {%- if cart.item_count == 0 -%}
+                    <div class="cart-items--no-items">
+                        <p>You have no items in your basket</p>
+                    </div>
+                {%- else -%}
+                    {%- assign isPreOrder = false -%}
+                    {%- assign aromas_qty = 0 -%}
+
+                    {%- render 'bundle-cart-items' -%}
+
+                    {%- for line_item in cart.items -%}
+                        {%- if line_item.properties._bundle_id != blank -%}{%- continue -%}{%- endif -%}
+
+                        {%- assign product = line_item.product -%}
+
+                        {%- if product.tags contains "preorder" -%}
+                            {%- assign isPreOrder = true -%}
+                        {%- endif -%}
+
+                        {%- assign lProductType = product.type | downcase -%}
+                        {%- if lProductType == "flavours" or lProductType == "flavour" or lProductType == "aroma" or lProductType == "aromas"  -%}
+                            {%- assign aromas_qty = aromas_qty | plus: line_item.quantity -%}
+                        {%- endif -%}
+ 
+                        {%- render 'cart-item', product: product, line_item : line_item -%}
+
+                    {%- endfor -%}        
+                {%- endif -%}
+                {%- render 'cart-upsell-item' -%}
+            </div>
+            {%- render 'cart-summary', aromas_qty : aromas_qty, isPreOrder : isPreOrder -%}
+        </div>
+    </div>
+</div>

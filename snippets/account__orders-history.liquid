@@ -1,0 +1,33 @@
+{%- if customer.orders.size != 0 -%}
+    <div class="account-area-page" id="account-orders">
+        <div class="account-area-page__wrap">
+            <div class="table">
+                <div class="table__row table__head">
+                    <div class="table__td table__image">My orders</div>
+                    {%- if customer.orders.size != 0 -%}
+                        <div class="table__td table__order-number">Order Number</div>
+                        <div class="table__td table__date">Date</div>
+                        <div class="table__td table__status">Status</div>
+                    {%- endif -%}
+                </div>
+                {% for order in customer.orders %}
+
+                    <div class="table__row">
+                        <a class="table__td table__image" href="{{ order.customer_url }}">
+                            {%- render 'image-responsive', image : order.line_items[0].image, custom_class : "", custom_alt : order.title -%}
+                        </a>
+                        <div class="table__td table__order-number">
+                            <h3>{{ order.name | link_to: order.customer_url }}</h3>
+                        </div>
+                        <div class="table__td table__date">
+                            {{ order.created_at | date: "%d/%m/%Y" }}
+                        </div>
+                        <div class="table__td table__status">
+                            {{ order.fulfillment_status }}
+                        </div>
+                    </div>
+                {%- endfor -%}
+            </div>
+        </div>
+    </div>
+{%- endif -%}

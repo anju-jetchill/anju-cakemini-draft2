@@ -1,0 +1,13 @@
+<a class="article-card" href="{{ article.url }}">
+    <div class="article-card__wrap">
+        <div class="article-card__image">
+            {%- render 'image-responsive', image: article.image, custom_alt : article.title -%}
+        </div>
+        <div class="article-card__content">
+            <h3>{{ article.title }}</h3>
+            <div class="article-card__meta">
+                <span class="date">{{ article.published_at | date: "%b %d, %Y" }}</span> by <span class="author">{{ article.author }}</span> 
+            </div>
+        </div>
+    </div>
+</a>
