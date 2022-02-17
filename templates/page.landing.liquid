@@ -1,0 +1,10 @@
+{%- assign content = page.content -%}
+
+{%- if content contains '[breadcrumbs]' -%}
+    {%- capture breadcrumbs -%}
+        {%- render 'breadcrumbs' -%}
+    {%- endcapture -%}
+    {%- assign content = content | replace: '[breadcrumbs]', breadcrumbs -%}
+{%- endif -%}
+
+{{ content }}

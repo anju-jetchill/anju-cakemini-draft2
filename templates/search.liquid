@@ -1,0 +1,52 @@
+
+<div class="search-intro">
+  <div class="search-intro container">
+    <h1>Search results</h1>
+    {%- if search.performed and search.results_count == 0 -%}
+      <p>Your search for "{{ search.terms }}" did not yield any results.</p>
+    {%- else -%}
+      <p>Showing search results for "{{ search.terms }}".</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% paginate  search.results by 1000 %}
+  <!--[search-results]-->
+
+  <div id="load-previous" class="load-button container">
+    <!--[load-previous]-->
+    {%- if paginate.previous.is_link %}
+        <button class="btn btn--pill btn--green" onclick="Filter.loadMore({{ paginate.current_page | minus: 1 }})">Load Previous</button>
+    {%- endif %}
+    <!--[/load-previous]-->
+</div>
+
+  <div id="product-list" class="cards-product">
+    
+    <div class="collection-product-list__wrap container">
+      <div class="collection-product-list" id="product-list">
+        <!--[product-cards]-->
+          {%- for item in  search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {%- render 'card-product', product: item, page_number: paginate.current_page -%}
+            {%- endif -%}
+          {%- endfor -%}
+        <!--[/product-cards]-->
+        </div>
+    </div>
+    
+    <div id="load-more" class="load-button container">
+        <!--[load-more]-->
+        {%- if paginate.next.is_link -%}
+                <button class="btn btn--pill btn--green" onclick="Filter.loadMore({{ paginate.current_page | plus: 1 }})">Load More</button>
+        {%- endif -%}
+        <!--[/load-more]-->
+    </div>
+
+    <div id="pagination-nav">
+        <!--[pagination]-->{% if paginate.pages > 1 %}{{ paginate | default_pagination }}{% endif %}<!--[/pagination]-->
+    </div>
+
+  </div>
+  <!--[/search-results]-->
+{% endpaginate %}

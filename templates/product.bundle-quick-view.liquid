@@ -1,0 +1,129 @@
+{%- layout none -%}
+{%- assign variant = product.selected_or_first_available_variant.id -%}
+<button class="bundle-quick-view-modal__close js-bundle-quick-view-trigger">
+    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"><path d="M28.5 9.62L26.38 7.5 18 15.88 9.62 7.5 7.5 9.62 15.88 18 7.5 26.38l2.12 2.12L18 20.12l8.38 8.38 2.12-2.12L20.12 18z"/></svg>
+</button>
+<div class="bundle-quick-view {% if variant.compare_at_price > variant.price %}variant-status--on-sale{% endif %}">
+    <div class="bundle-quick-view__wrap">
+        <div class="bundle-quick-view__image">
+            <img class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ product.media.first | img_url : '1200x' }}" alt="">
+        </div>
+
+        <form class="bundle-quick-view__info product-detail" action="/cart/add">
+            <p class="sku {% if product.selected_or_first_available_variant.sku == blank %}sku--no-sku{% endif %}">SKU: <span class="sku__value">{{ product.selected_or_first_available_variant.sku }}</span></p>
+
+            <h2 class="h1-style title"><a href="{{ product.url }}" target="_blank">{{ product.title }}</a></h2>
+            <h2 class="h4-style price-area">
+                {% if variant.compare_at_price > variant.price %}
+                <span class="was-price theme-money">{{ variant.compare_at_price | money }}</span>
+                {% endif %}
+                <span class="price theme-money">{{ variant.price | money }}</span>
+            </h2>
+
+            <div class="bundle-quick-view__variants">
+                {%- if product.available -%}
+                    {%- capture input_id_suffix -%}-{{ product.selected_or_first_available_variant.id }}{% if section != blank -%}-{{ section.id }}{%- endif -%}{%- endcapture -%}
+
+                        {% if product.variants.size > 1 -%}
+            
+                            <div class="option-selectors">
+                                {%- for option in product.options_with_values -%}
+                                    <div class="selector-wrapper cf">
+                                        <label {% if option.name == 'default' -%}class="hidden" {%- endif -%}
+                                            for="option-qv-{{ forloop.index0 }}{{ input_id_suffix }}">
+                                            {{ option.name }}
+                                        </label>
+                                        <span class="styled-select" {% if settings.prod_variant_style == 'blocks' -%}data-make-box{%- endif -%}>
+                                            <select id="option-qv-{{ forloop.index0 }}{{ input_id_suffix }}">
+                                                {%- for value in option.values -%}
+                                                    <option value="{{ value | escape }}" {% if option.selected_value == value -%}selected{%- endif -%}>
+                                                        {{ value }}
+                                                    </option>
+                                                {% endfor -%}
+                                            </select>
+                                        </span>
+                                    </div>
+
+                                {% endfor -%}
+                            </div>
+            
+                            <select name="id" class="original-selector"
+                                aria-label="Selector label">
+                                {%- for variant in product.variants -%}
+                                    <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant.id -%}
+                                        selected="selected" {%- endif -%}
+                                        data-stock="{% if variant.inventory_management == 'shopify' and variant.inventory_quantity <= 0 -%}out{%- endif -%}">
+                                        {{ variant.title | escape }}
+                                    </option>
+                                {% endfor -%}
+                            </select>
+        
+                        {% else -%}
+                            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+            
+                            {% unless product.has_only_default_variant -%}
+                                <div class="singleopt">
+                                    {%- for option in product.options -%}
+                                        {% assign opt_idx = 'option' | append: forloop.index -%}
+                                        <label>{{ option }}: {{ product.variants.first[opt_idx] }}</label>
+            
+                                        {% if settings.show_size_chart and option == settings.size_chart_variant -%}
+                                            <div class="size-chart-container">
+                                                <a href="{{ pages[settings.size_chart_page].url }}" target="_blank" class="size-chart-link">
+                                                    Size chart
+                                                </a>
+                                                <div class="size-chart-content hidden">
+                                                    <div class="size-chart">
+                                                        <div class="size-chart__inner user-content">
+                                                            {{ pages[settings.size_chart_page].content }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {%- endif -%}
+                                    {% endfor -%}
+                                </div>
+                            {% endunless -%}
+                        {%- endif -%}
+                {%- else -%}
+                    <p><em>Unavailable</em></p>
+                {%- endif -%}
+            </div>
+            <div class="bundle-quick-view__text">
+                {{ product.description  }}
+                {%- render "shortcode-short-description", content : product.description -%}
+
+                {%- if settings.deliveryAndReturns != blank -%}
+                    <div class="product-tabs">
+                        <div class="product-tabs__wrap">
+                            <div class="product-tabs__item">
+                                <h3>Delivery & Returns {%- render 'svg.cross' -%}</h3>
+                                <div class="product-tabs__item-content">
+                                    {{ settings.deliveryAndReturns }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {%- endif -%}
+            </div>
+            <div class="bundle-quick-view__actions">
+
+                <div class="bundle-quantity-btn">
+                    <div class="bundle-quantity-btn__wrap">
+                        <button class="bundle-quantity-btn__minus" type="button"></button>
+                        <input type="text" class="bundle-quantity-btn__qty" value="0" disabled data-product-input-id="js-product-{{ product.selected_or_first_available_variant.id }}">
+                        <button class="bundle-quantity-btn__add" type="button"></button>
+                    </div>
+                </div>    
+
+                <div id="js-bundle-quick-view-message"></div>
+                <button class="btn js-bundle-add-item" type="button" disabled
+                data-product-price="{{ product.price }}"
+                data-product-id="{{ product.selected_or_first_available_variant.id }}"
+                data-product-title="{{ product.title }}"
+                data-product-img-src="{{ product.images[0] | img_url : '400x' }}"
+                >Add to cart</button>
+            </div>
+        </form>
+    </div>
+</div>

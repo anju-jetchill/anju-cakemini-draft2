@@ -1,0 +1,107 @@
+{%- render 'breadcrumbs' -%}
+
+<div class="centered-layout">
+    <div class="centered-layout__wrap container">
+
+    {%- form 'customer_login', id: "login-form" -%}
+        <div class="login-form">
+            <div class="login-form__wrap ">
+
+                <h1 class="h2">Login</h1>
+                <p class="login-form__sub-title">Don't have an account? <a href="/account/register">Sign Up</a></p>
+                {{ form.errors | default_errors }}
+                <label for="CustomerEmail">Email</label>
+                <input class="{%- if form.errors contains 'email' %} input--error{%- endif %}" type="email" name="customer[email]" placeholder="" autocorrect="off" autocapitalize="off" required>
+            
+                {%- if form.password_needed -%}
+                    <label for="CustomerPassword" >Password</label>
+                    <input class="{%- if form.errors contains 'password' %} input--error{%- endif %}" type="password" value="" name="customer[password]" placeholder="" required>
+                    <a class="reset-password-link" href="#reset-password">Forgotten your password?</a>
+                {%- endif -%}
+            
+                <div class="login-form__buttons">
+                    <button class="btn btn--green" type="submit">Sign in</button>
+                    <a class="btn btn--black" href="/account/register">Create an account</a>
+                </div>
+                <p class="text-small">This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.</p>
+            </div>
+        </div>
+    {%- endform -%}
+    
+    {%- if shop.checkout.guest_login -%}
+        {%- form 'guest_login', id: "guest-form" -%}
+            <div class="login-form">
+                <div class="login-form__wrap">
+                    <h2>Login as a guest</h2>
+                    <button class="btn btn--pink" type="submit">Continue as a guest</button>
+                </div>
+            </div>
+        {%- endform -%}
+    {%- endif -%}
+
+    {%- form 'recover_customer_password', id : "reset-password-form" -%}
+
+        <div class="login-form">
+            <div class="login-form__wrap ">
+
+            <h2 class="h1">Reset your password</h2>
+            <p></p>
+            {%- if form.posted_successfully? -%}
+                <span class="hide reset-password-success"></span>
+            {%- endif -%}
+
+            <label for="RecoverEmail">Email</label>
+            <input
+                type="email"
+                value=""
+                name="email"
+                id="RecoverEmail"
+                class="input-full{%- if form.errors %} input--error{%- endif %}"
+                autocorrect="off"
+                autocapitalize="off"
+                required
+                    {%- if form.errors -%}
+                    aria-invalid="true"
+                    aria-describedby="RecoverEmail-email-error"
+                    {%- endif -%}
+                >
+                {%- if form.errors -%}
+                    <span id="RecoverEmail-email-error" class="input-error-message">
+                        <span class="visuallyHidden">{{ 'general.accessibility.error' | t }} </span>
+                        <span>{{ form.errors.messages['form'] }}</span>
+                    </span>
+                {%- endif -%}
+                <button class="btn btn--pink"  type="submit">Reset Password</button>
+                <a class="btn btn--black" type="button" href="#login">Cancel</a>
+            </div>
+        </div>
+    {%- endform -%}
+
+    <script>
+        var View = {
+            update : function() {
+
+                var view = location.hash.replace('#','');
+
+                // hide forms
+                document.getElementById('login-form').style.display = "none";
+                document.getElementById('reset-password-form').style.display = "none";
+
+                console.log(view + '-for');
+
+                // show the correct form
+                if (document.getElementById(view + '-form')) {
+                    document.getElementById(view + '-form').style.display = "block";
+                } else {
+                    document.getElementById('login-form').style.display = "block";
+                }
+            }
+        }
+
+        window.addEventListener("hashchange", function() {
+            View.update();
+        }, false);
+
+        View.update();
+
+    </script>

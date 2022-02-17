@@ -1,0 +1,24 @@
+{%- section 'page-hero' -%}
+{%- render 'breadcrumbs' -%}
+{%- section 'blog-blogs-navigation' -%}
+
+{%- unless blog.articles_count == 0 -%}
+    {%- paginate blog.articles by 9 -%}
+
+    <div class="articles container" id="ArticlesList">
+        <!--__BEGIN_ARTICLES__-->
+        {%- for article in blog.articles -%}
+        {%- render 'card-article', article: article -%}
+        {%- endfor -%}
+        <!--__END_ARTICLES__-->
+    </div>
+
+    {%- if paginate.next.is_link -%}
+        <div class="load-more" id="LoadMore">
+            <!--__BEGIN_LOAD_MORE_LINK_URL__{{ paginate.next.url }}__END_LOAD_MORE_LINK_URL__-->
+            <a href="{{ paginate.next.url }}" id="BlogsNextLink" class="btn btn--green">Load More</a>
+        </div>
+    {%- endif -%}
+    
+    {% endpaginate %}
+{%- endunless -%}

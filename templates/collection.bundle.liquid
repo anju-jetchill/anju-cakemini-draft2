@@ -1,0 +1,40 @@
+{%- section 'collection-a-block' -%}
+<div class="bg--dark">
+    {%- render 'breadcrumbs' -%}
+
+    <div class="collection-layout container">
+        <div class="collection-layout--left">
+
+            {%- paginate collection.products by 30 -%}
+
+                <div class="collection-product-list__wrap container">
+                    <div class="collection-product-list" id="product-list">
+                        <!--[product-cards]-->
+                        {%- for product in collection.products -%}
+                            {%- render 'bundle-card-product', product : product -%}
+                        {%- endfor -%}
+                        <!--[/product-cards]-->
+                    </div>
+                </div>
+
+                <div id="load-more" class="load-button container">
+                    <!--[load-more]-->
+                    {%- if paginate.next.is_link -%}
+                            <button class="btn btn--pill btn--green" onclick="Filter.loadMore({{ paginate.current_page | plus: 1 }})">Load More</button>
+                    {%- endif -%}
+                    <!--[/load-more]-->
+                </div>
+            
+                <div id="pagination-nav">
+                    <!--[pagination]-->{% if paginate.pages > 1 %}{{ paginate | default_pagination }}{% endif %}<!--[/pagination]-->
+                </div>
+            {%- endpaginate -%}
+        </div>
+
+        <div class="collection-layout--right">
+            {%- section 'bundle-window' -%}
+        </div>
+    </div>
+</div>
+{%- section 'collection-b-block' -%}
+{%- render 'bundle-quick-view-modal-template' -%}

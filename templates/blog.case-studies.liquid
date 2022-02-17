@@ -1,0 +1,54 @@
+{%- section 'page-hero' -%}
+{%- render 'breadcrumbs' -%}
+
+<div class="case-studies">
+    <div class="case-studies__wrap">
+
+        <span class="case-studies__title">Getting started</span>
+        <h2>What the experts say</h2>
+
+        <div class="case-studies__list">
+            <div class="case-studies__list-wrap">
+
+
+                <svg class="hex-mask" width="220" height="220" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" version="1.1">
+                    <defs>
+                       <clipPath id="hexagonal-mask">
+                          <polygon points="300,150 225,280 75,280 0,150 75,20 225,20"></polygon>
+                       </clipPath>
+                    </defs> 
+                </svg>
+                <div class="hex-container">
+                    
+                    {%- unless blog.articles_count == 0 -%}
+                        {%- paginate blog.articles by 100 -%}
+
+                            {%- for article in blog.articles -%}
+                                {% cycle '<div class="hexrow">', '', '','<div class="hexrow">','' %}
+                        
+                                <div class="hex-item">
+                                    <a href="{{ article.url }}" class="hex-link">
+                                        <svg width="290" height="290" viewBox="0 0 300 300">
+                                            <polygon points="300,150 225,280 75,280 0,150 75,20 225,20"></polygon>
+                                            <image clip-path="url(#hexagonal-mask)" height="100%" width="100%"
+                                                xlink:href="{{ article.image | img_url: '500x' }}"
+                                                preserveAspectRatio="xMidYMin slice"></image>
+                                        </svg>
+                                        <span class="hex-link-title">
+                                            <span class="title">{{ article.title }}</span>
+                                            <span class="read-more">Read More</span>
+                                        </span>
+                                    </a>
+                                </div>
+                        
+                                {% if forloop.last %}</div>{% break %}{% endif %}
+                                {% cycle '', '', '</div>','','</div>' %}                        
+                            {%- endfor -%}
+
+                            {% endpaginate %}
+                        {%- endunless -%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

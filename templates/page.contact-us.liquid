@@ -1,0 +1,105 @@
+{%- section 'page-hero' -%}
+
+<div class="sidebar-layout bg-swirls bg-swirls--v1">
+    <div class="sidebar-layout__wrap container">
+
+        {%- section 'page-sidebar' -%}
+
+        <div class="sidebar-layout__content">
+            {%- render 'breadcrumbs' -%}
+
+            <div class="sidebar-layout__page-content">
+                {{ page.content }}
+            </div>
+
+            {%- assign formId = 'ContactForm' -%}
+            {% form 'contact', id: formId %}
+
+                {% if form.posted_successfully? %}
+                    <p class="note note--success"><strong>Success!</strong><br/>Your message has been sent.</p>
+                {% endif %}
+
+                {{ form.errors | default_errors }}
+
+                <div class="form-row">
+                    <div class="form-row__column">
+                        <label for="ContactFormName">Name</label>
+                        <input type="text" id="ContactFormName" name="contact[name]" autocapitalize="words" required value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">        
+                    </div>
+                    <div class="form-row__column">
+                        <label for="ContactFormCompany">Company Name</label>
+                        <input type="text" id="ContactFormCompany" name="contact[company]" autocapitalize="words" value="">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-row__column">
+                        <label for="ContactFormEmail">Email Address</label>
+                        <input type="email" id="ContactFormEmail" name="contact[email]" autocorrect="off" autocapitalize="off" required value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">        
+                    </div>
+                    <div class="form-row__column">
+                        <label for="ContactFormPhone">Phone Number</label>
+                        <input type="tel" id="ContactFormPhone" name="contact[phone]" pattern="[0-9\-]*" required value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">        
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-row__column">
+                        <label for="ContactFormEnquiry">Reason for enquiry</label>
+                        <select id="ContactFormEnquiry" name="contact[enquiry]">
+                            <option value="general">General question</option>
+                            <option value="option-2">Option 1</option>
+                            <option value="option-3">Option 2</option>
+                            <option value="option-3">Option 3</option>
+                          </select>
+                    </div>
+                    <div class="form-row__column">
+                        <label for="ContactFormOrderNumber">Order Number</label>
+                        <input type="text" id="ContactFormOrderNumber" name="contact[ordernumber]" autocapitalize="words" value="" placeholder="#000-0000">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-row__column">
+                        <label for="ContactFormMessage">Message</label>
+                        <textarea rows="10" id="ContactFormMessage" name="contact[body]" placeholder="Please enter your message here" required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-row__column text-center">
+                        <button class="btn btn--green" type="submit">Send Message</button>
+                        <p class="text-small">This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.</p>
+                    </div>
+                </div>
+
+            {% endform %}
+
+            <div class="get-in-touch-bar">
+                <div class="get-in-touch-bar__wrap">
+                    <div class="get-in-touch-bar__item">
+                        <div class="get-in-touch-bar__icon"><i class="fas fa-home-lg"></i></div>
+                        <div class="get-in-touch-bar__text">
+                            {%- if settings.addressL1 != blank -%}<p>{{ settings.addressL1 }}</p>{%- endif -%}
+                            {%- if settings.addressL2 != blank -%}<p>{{ settings.addressL2 }}, {{ settings.postCode }}</p>{%- endif -%}
+                            {%- if settings.addressL3 != blank -%}<p>{{ settings.addressL3 }}</p>{%- endif -%}
+                        </div>
+                    </div>
+
+                    <div class="get-in-touch-bar__item">
+                        <div class="get-in-touch-bar__icon"><i class="fas fa-phone-alt"></i></div>
+                        <div class="get-in-touch-bar__text">
+                            {%- if settings.phone != blank -%}<p>{{ settings.phone }}</p>{%- endif -%}
+                            {%- if settings.phone2 != blank -%}<p>{{ settings.phone2 }}</p>{%- endif -%}
+                        </div>
+                    </div>                    
+
+                    <div class="get-in-touch-bar__item">
+                        {%- render 'social-icons' -%}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

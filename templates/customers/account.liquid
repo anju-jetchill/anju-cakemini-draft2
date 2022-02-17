@@ -1,0 +1,65 @@
+<div class="bg-swirls bg-swirls--v1">
+
+    <div class="account">
+
+        {%- render 'account-sidebar' -%}
+        
+        <div class="account__content">
+            <div class="account__content-wrap container">
+                {%- render 'breadcrumbs' -%}
+                <h1>My Account</h1>
+                {%- render 'account__orders-history' -%}
+
+                <div class="overview-summary">
+                    <div class="overview-summary__wrap">
+                        <div class="overview-summary__block">
+                            <h3><i class="fas fa-house-user"></i> My Shipping Address</h3>
+                            <div class="overview-summary__body">
+                                {%- for address in customer.addresses -%}
+                                    {%- if address == customer.default_address -%}
+                                        {%- render 'addresses-list__card', address : address -%}
+                                    {%- endif -%}
+                                {%- endfor -%}
+                            </div>
+                            <a class="btn btn--green" href="/account/addresses">View all addresses</a>
+                        </div>
+
+                        <div class="overview-summary__block">
+                            <h3><i class="fas fa-address-card"></i> My Details</h3>
+                            <div class="overview-summary__body">
+                                <p>
+                                    <span>Name:</span>{{ customer.first_name | append: ' ' | append: customer.last_name }}
+                                </p>
+                                <p>
+                                    <span>Email:</span>{{ customer.email }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="overview-summary__block">
+                            <h3><i class="fas fa-heart"></i> My Wishlist</h3>
+                            <div class="overview-summary__body">
+
+                            {%- for tag in customer.tags -%}
+                                {%- unless tag contains "WISHLIST_" %}{% continue %}{% endunless -%}
+                                {%- assign p_handle = tag | remove: "WISHLIST_" -%}
+                                {%- assign p = all_products[p_handle] -%}
+                                {%- unless p %}{% continue %}{% endunless -%}
+                                {%- assign wishlist_item_count = wishlist_item_count | plus: 1 -%}
+                            {%- endfor -%}
+              
+                            {%- if wishlist_item_count > 0 -%}  
+                                <p>{{ wishlist_item_count }} SAVED ITEMS</p>
+                            {%- endif -%}
+
+                            </div>
+                            <a class="btn btn--green" href="/pages/my-wishlist">View wishlist</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

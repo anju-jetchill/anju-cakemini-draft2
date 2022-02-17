@@ -1,0 +1,40 @@
+{%- render 'breadcrumbs' -%}
+<div class="cart-header">
+    <div class="cart-header__wrap container">
+        <h1>YOUR CART</h1>
+    </div>
+</div>
+
+<div class="cart-items container">
+    <!--[cart-items]-->
+    {%- if cart.item_count == 0 -%}
+        <div class="cart-items--no-items">
+            <p>You have no items in your basket</p>
+        </div>
+    {%- else -%}
+        {%- assign isPreOrder = false -%}
+        {%- assign aromas_qty = 0 -%}
+
+        {%- render 'bundle-cart-items' -%}
+
+        {%- for line_item in cart.items -%}
+            {%- if line_item.properties._bundle_id != blank -%}{%- continue -%}{%- endif -%}
+
+            {%- assign product = line_item.product -%}
+
+            {%- if product.tags contains "preorder" -%}{%- assign isPreOrder = true -%}{%- endif -%}
+
+            {%- render 'cart-item', product: product, line_item : line_item -%}
+
+            {%- assign lProductType = product.type | downcase -%}
+            {%- if lProductType == "flavours" or lProductType == "flavour" or lProductType == "aroma" or lProductType == "aromas"  -%}
+                {%- assign aromas_qty = aromas_qty | plus: line_item.quantity -%}
+            {%- endif -%}
+        {%- endfor -%}        
+    {%- endif -%}
+    {%- render 'cart-upsell-item' -%}
+    <!--[/cart-items]-->
+</div>
+<div class=" cart-summary-wrap container">
+    {%- render 'cart-summary', aromas_qty : aromas_qty, isPreOrder : isPreOrder -%}
+</div>

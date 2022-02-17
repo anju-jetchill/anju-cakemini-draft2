@@ -1,0 +1,14 @@
+{%- assign content = article.content -%}
+
+{%- if content contains '[breadcrumbs]' -%}
+
+    {%- capture breadcrumbs -%}
+        {%- render 'breadcrumbs' -%}
+    {%- endcapture -%}
+    
+    {%- assign content = content | replace: '[breadcrumbs]', breadcrumbs -%}
+{%- endif -%}
+
+{{ content }}
+
+{%- section 'product-dazzling-words' -%}

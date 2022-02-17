@@ -1,0 +1,17 @@
+{%- section 'page-hero' -%}
+
+<div class="sidebar-layout bg-swirls bg-swirls--v1">
+    <div class="sidebar-layout__wrap container">
+
+        {%- section 'page-sidebar' -%}
+
+        <div class="sidebar-layout__content">
+
+            {%- render 'breadcrumbs' -%}
+
+            <div class="sidebar-layout__page-content">
+                {{ page.content | replace: '[faq-title]', '<details><summary>' | replace: '[/faq-title]', '</summary><div>' | replace: '[faq-text]', ''  | replace: '[/faq-text]', '</div></details>' }}
+            </div>
+        </div>
+    </div>
+</div>

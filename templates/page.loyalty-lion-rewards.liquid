@@ -1,0 +1,28 @@
+{%- if customer -%}
+    <div class="bg-swirls bg-swirls--v1">
+        <div class="account">
+            {%- render 'account-sidebar' -%}
+            <div class="account__content">
+                <div class="account__content-wrap container">
+                    {%- render 'breadcrumbs' -%}
+                    <h1>My Rewards</h1>
+                    {{ page.content }}
+                    <h3 class="lion-integrated-page-section__heading-text">Membership tiers</h3>
+                    <div data-lion-tier-rules-compare></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%- else -%}
+    <div class="bg-swirls bg-swirls--v1">
+        <h1 class="visuallyhidden">My Rewards</h1>
+        <div class="page">
+            {%- section 'loyalty-lion-signup' -%}
+            <div class="page__wrap">
+                <div class="loyalty-lion-info">
+                    {%- section 'loyalty-lion-rewards' -%}
+                </div>
+            </div>
+        </div>
+    </div>
+{%- endif -%}

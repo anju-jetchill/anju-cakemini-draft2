@@ -1,0 +1,29 @@
+<div class="bg-swirls bg-swirls--v1">
+  <div class="account">
+    {%- render 'account-sidebar' -%}
+    <div class="account__content">
+      <div class="account__content-wrap container">
+        {%- render 'breadcrumbs' -%}
+        <h1>My Shipping Addresses</h1>
+        <div class="account__buttons">
+            <a href="#add-address" class="btn btn--green btn-add-address" onclick="AddressAdd.show();">Add a new address</a>
+        </div>
+        {%- render 'addresses-list' -%}
+      </div>
+    </div>
+  </div>  
+</div>
+
+<script>
+    // Initialize observers on address selectors
+    new Shopify.CountryProvinceSelector('AddressCountryNew', 'AddressProvinceNew', {
+      hideElement: 'AddressProvinceContainerNew'
+    });
+  
+    // Setup province selector on each customer address
+    {% for address in customer.addresses %}
+      new Shopify.CountryProvinceSelector('AddressCountry_{{address.id}}', 'AddressProvince_{{address.id}}', {
+        hideElement: 'AddressProvinceContainer_{{address.id}}'}
+      );
+    {% endfor %}  
+</script>

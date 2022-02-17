@@ -1,0 +1,41 @@
+{%- if customer -%}
+
+  <div class="bg-swirls bg-swirls--v1">
+    <div class="account">
+      {%- render 'account-sidebar' -%}
+      <div class="account__content">
+        <div class="account__content-wrap container">
+          {%- render 'breadcrumbs' -%}
+          <h1>My Wishlist</h1>
+          <div class="collection-product-list__wrap">
+              <div class="collection-product-list" id="product-list">
+
+                {%- assign wishlist_item_count = 0 -%}
+                {%- capture wishlist_items -%}
+                  {%- for tag in customer.tags -%}
+                      {%- unless tag contains "WISHLIST_" %}{% continue %}{% endunless -%}
+                      {%- assign p_handle = tag | remove: "WISHLIST_" -%}
+                      {%- assign p = all_products[p_handle] -%}
+                      {%- unless p %}{% continue %}{% endunless -%}
+
+                      {%- render 'card-product', product : p, isWishlistItem : true -%}
+
+                      {%- assign wishlist_item_count = wishlist_item_count | plus: 1 -%}
+                  {%- endfor -%}
+                {%- endcapture -%}
+
+                {%- if wishlist_item_count > 0 -%}                
+                  {{ wishlist_items }}
+                {%- else -%}  
+                  <p>Your wishlist is empty.</p>
+                {%- endif -%}
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+{%- else -%}
+   <h2>Please login to view your wishlist</h2> 
+{%- endif -%}
