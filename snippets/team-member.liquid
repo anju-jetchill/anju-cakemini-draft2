@@ -1,0 +1,44 @@
+<div class="team-member {% if block.settings.showBackground %}bg-swirls bg-swirls--v1{% endif %}">
+
+    {%- if block.settings.showBreadcrumbs -%}
+        {%- render 'breadcrumbs' -%}
+    {%- endif -%}
+
+    <div class="team-member__wrap {% if block.settings.flipDirection %}team-member--reverse{% endif %}">
+        <div class="team-member__column">
+            {%- if block.settings.imageDesktop != blank -%}
+                {%- render 'image-responsive', image : block.settings.imageDesktop, custom_class : "", custom_alt : block.settings.title -%}
+            {%- endif -%}
+        </div>
+        <div class="team-member__column team-member--text">
+            <div class="team-member__column-wrap">
+                {%- if block.settings.title != blank -%}
+                    <h2>{{ block.settings.title }}</h2>
+                {%- endif -%}
+
+                {%- if block.settings.subTitle != blank -%}
+                    <h3 class="team-member__sub-title">{{ block.settings.subTitle }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.text != blank -%}
+                    <div class="team-member__text">{{ block.settings.text }}</div>
+                {%- endif -%}
+
+                {%- if block.settings.favourite1Answer != blank -%}
+                    <h3>{{ block.settings.favourite1Question }}</h3>
+                    {{ block.settings.favourite1Answer }}
+                {%- endif -%}
+
+                {%- if block.settings.favourite2Answer != blank -%}
+                    <h3>{{ block.settings.favourite2Question }}</h3>
+                    {{ block.settings.favourite2Answer }}
+                {%- endif -%}
+
+                {%- if block.settings.favourite3Answer != blank -%}
+                    <h3>{{ block.settings.favourite3Question }}</h3>
+                    {{ block.settings.favourite3Answer }}
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>

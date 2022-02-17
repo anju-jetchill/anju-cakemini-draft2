@@ -1,0 +1,23 @@
+<div class="usp-hero">
+    <div class="usp-hero__wrap container">
+        <div class="usp-hero__items">
+            {%- for block in section.blocks -%}
+                <div class="usp-hero__item">
+
+                    <div class="usp-hero__icon">
+                        {%- if block.settings.svg != blank -%}
+                            {{ block.settings.svg }}
+
+                        {%- elsif block.settings.faClass != blank -%}
+                            <i class="{{ block.settings.faClass }}"></i>
+                        {%- endif -%}
+                    </div>
+
+                    {%- if block.settings.title != blank -%}
+                        <h3>{{ block.settings.title }}</h3>
+                    {%- endif -%}
+                </div>
+            {%- endfor -%}
+        </div>
+    </div>
+</div>

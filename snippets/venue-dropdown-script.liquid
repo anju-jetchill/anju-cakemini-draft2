@@ -1,0 +1,181 @@
+
+
+<template id="venue-type-section-template">
+   <div class="section section--applies-type"> 
+       <div class="section__header">
+            <h2 class="section__title" id="section-applies-title">
+               Type
+            </h2>
+        </div>
+     <div class="field__input-wrapper field__input-wrapper--select">
+      <select class="field__input field__input--select" aria-required="true" name="checkout[attributes][Type]" id="checkout_applies" >
+            <option value="">Select Type...</option>
+            <option value="Group" {%- if checkout.attributes['Type'] == 'Group' %} selected{% endif %}>Group</option>
+            <option value="Individual" {%- if checkout.attributes['Type'] == 'Individual' %} selected{% endif %}>Individual</option>
+     </select>
+      <div class="field__caret">
+        <svg class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-10 field__caret-svg" role="presentation" aria-hidden="true" focusable="false"> <use xlink:href="#caret-down"></use> </svg>
+     </div>
+        <p class="field__message field__message--error" id="error-for-applie"></p>
+     </div>
+  </div>
+    <div class="section section--venue-type">       
+        <div class="section__header">
+            <h2 class="section__title" id="section-venue-type-title">
+                Venue
+            </h2>
+        </div>
+        <div class="section__content" data-section="venue-type">
+            <div class="fieldset">
+                <div class="field field--required field--show-floating-label">
+                    <div class="field__input-wrapper field__input-wrapper--select">
+                        <label class="field__label field__label--visible" for="checkout_venue_type">Venue</label>
+                        <select class="field__input field__input--select" aria-required="true" name="checkout[attributes][Venue]" id="checkout_venue_type" placeholder="Venue">
+                            <option value="">Select venue...</option>
+                            <option {%- if checkout.attributes['Venue'] == 'Bar' %} selected{% endif %}>Bar</option>
+                            <option {%- if checkout.attributes['Venue'] == 'Pub' %} selected{% endif %}>Pub</option>
+                            <option {%- if checkout.attributes['Venue'] == 'Club' %} selected{% endif %}>Club</option>
+                            <option {%- if checkout.attributes['Venue'] == 'Restaurant' %} selected{% endif %}>Restaurant</option>
+                            <option {%- if checkout.attributes['Venue'] == 'Hotel' %} selected{% endif %}>Hotel</option>
+                            <option {%- if checkout.attributes['Venue'] == 'Casino' %} selected{% endif %}>Casino</option>
+                            <option {%- if checkout.attributes['Venue'] == 'Drink Brand' %} selected{% endif %}>Drink Brand</option>
+                            <option {%- if checkout.attributes['Venue'] == 'Private Use' %} selected{% endif %}>Private Use</option>
+                            <option {%- if checkout.attributes['Venue'] == 'Tourist Attraction' %} selected{% endif %}>Tourist Attraction</option>
+                            <option {%- if checkout.attributes['Venue'] == 'Other' %} selected{% endif %}>Other</option>
+                        </select>
+                        <div class="field__caret">
+                            <svg class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-10 field__caret-svg" role="presentation" aria-hidden="true" focusable="false"> <use xlink:href="#caret-down"></use> </svg>
+                        </div>
+                    </div>
+                    <p class="field__message field__message--error" id="error-for-venue-type"></p>
+                </div>
+                <div id="other-venue-type-specify" class="field field--required field--show-floating-label {%- if checkout.attributes['Venue'] != 'Other' %} hidden{% endif %}">
+                    <div class="field__input-wrapper">
+                        <label class="field__label field__label--visible" for="checkout_venue_type_other">Please specify</label>
+                        <input placeholder="Venue" autocorrect="off" class="field__input" type="text" name="checkout[attributes][Venue Specify]" value="{{ checkout.attributes['Venue Specify'] }}" id="checkout_venue_type_other" aria-haspopup="false">
+                    </div>
+                    <p class="field__message field__message--error" id="error-for-venue-type-other"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+                           
+<script>
+    	
+    var _venueDropdownInit = function() {
+                                                                                                
+console.log("{{Shopify.Checkout.step}}");
+{% if content_for_layout contains 'data-step="payment_method"' and checkout.attributes['Type'] == blank  and checkout.attributes['Venue'] == blank    %}
+
+           var contactInfoStepWrapperEl = document.querySelector('div.step[data-step="payment_method"]');    
+       {% else %}                                                                                            
+        var contactInfoStepWrapperEl = document.querySelector('div.step[data-step="contact_information"]');
+{% endif %}
+        if (!contactInfoStepWrapperEl) return;
+
+        var stepSectionsEl = contactInfoStepWrapperEl.querySelector('.step__sections');
+
+        if (!stepSectionsEl) return;
+
+  {% if  content_for_layout contains 'data-step="payment_method"' and checkout.attributes['Type'] == blank  and checkout.attributes['Venue'] == blank    %}
+
+        var shippingAddressSectionEl = stepSectionsEl.querySelector('.section.section--reductions');
+                                                                                                  
+  {% else %} 
+       var shippingAddressSectionEl = stepSectionsEl.querySelector('.section.section--shipping-address');
+                                                                                                   
+      {% endif %}
+        if (!shippingAddressSectionEl) return;
+
+        var venueTypeSectionTemplate = document.getElementById('venue-type-section-template');
+  
+        if (!venueTypeSectionTemplate) return;
+
+        var venueTypeSectionTemplateClone = venueTypeSectionTemplate.content.cloneNode(true);
+         console.log(stepSectionsEl);
+        stepSectionsEl.insertBefore(venueTypeSectionTemplateClone, shippingAddressSectionEl);
+
+		var appliesSelectEl = document.getElementById('checkout_applies');
+        var appliesErrorEl = document.getElementById('error-for-applie'); 
+                                                                                                       
+        var continueButtonEl = document.getElementById('continue_button');
+        var venueTypeSelectEl = document.getElementById('checkout_venue_type');
+        var venueTypeErrorEl = document.getElementById('error-for-venue-type');
+        var venueTypeOtherSpecifyFieldWapperEl = document.getElementById('other-venue-type-specify');
+        var venueTypeOtherSpecifyFieldEl = document.getElementById('checkout_venue_type_other');
+        var venueTypeOtherSpecifyErrorEl = document.getElementById('error-for-venue-type-other');
+
+                                                                                                       
+        if (continueButtonEl) {
+            continueButtonEl.addEventListener('click', function(e) {
+                                                                                                       
+				if (appliesSelectEl.value == "") {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    appliesErrorEl.parentNode.classList.add('field--error');
+                    appliesErrorEl.innerText = "Select Type"
+                    return;
+                }
+
+                                                                      
+                if (venueTypeSelectEl.value == "") {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    venueTypeErrorEl.parentNode.classList.add('field--error');
+                    venueTypeErrorEl.innerText = "Select a venue"
+                    return;
+                }
+
+                if (venueTypeSelectEl.value == "Other" && venueTypeOtherSpecifyFieldEl.value.trim().length < 1)  {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    venueTypeOtherSpecifyErrorEl.parentNode.classList.add('field--error');
+                    venueTypeOtherSpecifyErrorEl.innerText = "Specify a venue";
+                }
+                    
+            });
+        }
+
+        venueTypeSelectEl.addEventListener('change', function() {
+            if (this.value == "") {
+                this.parentNode.parentNode.classList.add('field--error');
+                venueTypeErrorEl.innerText = "Select a venue"
+            } else {
+                this.parentNode.parentNode.classList.remove('field--error');
+                venueTypeErrorEl.innerText = ""
+            }
+
+            if (this.value == "Other") {
+                venueTypeOtherSpecifyFieldWapperEl.classList.remove('hidden');
+            } else {
+                venueTypeOtherSpecifyFieldWapperEl.classList.add('hidden');
+            }
+        });
+
+        venueTypeOtherSpecifyFieldEl.addEventListener('input', function() {
+            if (this.value == "") {
+                this.parentNode.parentNode.classList.add('field--error');
+                venueTypeOtherSpecifyErrorEl.innerText = "Specify a venue"
+            } else {
+                this.parentNode.parentNode.classList.remove('field--error');
+                venueTypeOtherSpecifyErrorEl.innerText = ""
+            }
+        });
+
+    };
+
+    (function() {
+        _venueDropdownInit();
+
+
+        setInterval(function() {
+            if (document.getElementById('checkout_venue_type')) return;
+            _venueDropdownInit();
+        }, 1000);
+    }());   
+
+</script>
+ 
+  

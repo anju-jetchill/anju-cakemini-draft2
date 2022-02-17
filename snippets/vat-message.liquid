@@ -1,0 +1,14 @@
+
+{%- if settings.vatMessageToolTipText  != blank -%}
+    <div class="vat-message">
+        <p>{{ settings.vatMessageText }}</p>
+        <div class="tooltip">
+            <span class="tooltip__icon">?</span>
+            <div class="tooltip__message">
+                <div class="tooltip__message-wrap">
+                    {{ settings.vatMessageToolTipText }}
+                </div>
+            </div>
+        </div>
+    </div>
+{%- endif -%}
