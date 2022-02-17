@@ -1,0 +1,50 @@
+
+{%- if section.settings.showFilterNav -%}
+    {%- render 'blog-tag-navigation' -%}
+{%- else -%}
+    <nav class="blog-tag-navigation">
+        <ul>
+            {% for block in section.blocks %}
+                {% assign class = "" %}
+                {%- if blog.url == block.settings.url -%}{% assign class = 'active' %}{%- endif -%}
+                <li class="{{ class }}"><a href="{{ block.settings.url }}">{{ block.settings.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+{%- endif -%}
+
+{% schema %}
+{
+    "name": "Nav: Blogs",
+
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "showFilterNav",
+            "label": "Shot Tag Filter",
+            "default": true
+        }
+    ],
+
+    "blocks" : [
+        {
+            "name": "block",
+            "type": "block",
+            "settings": [
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "URL / LINK"
+                },
+
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Link title",
+                    "info": "Leave blank to use blog title"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

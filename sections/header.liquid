@@ -1,0 +1,68 @@
+{%- render 'header', section : section -%}
+
+{% schema %}
+{
+    "name": "Header",
+    "settings": [
+
+        {
+            "type": "header",
+            "content": "Search"
+        },
+
+        {
+            "type": "text",
+            "id": "searchPlaceholder",
+            "label": "Placeholder",
+            "default": "Search our store"
+        }
+    ],
+
+    "blocks" : [
+        {
+            "type": "link_style",
+            "name": "Menu Link: Style",
+            "settings": [
+
+                {
+                    "type": "text",
+                    "id": "targetLinkTitle",
+                    "label": "Target Link Title",
+                    "info": "Enter target link title without spaces and special characters."
+                },
+
+                {
+                    "type": "paragraph",
+                    "content": "Add styling to a link in the meganav."
+                },
+
+                {
+                    "type": "color",
+                    "id": "textColor",
+                    "label": "Color"
+                },
+
+                {
+                    "type": "header",
+                    "content": "Icon",
+                    "info": "1 methods below to add an icon"
+                },
+
+                {
+                    "type": "text",
+                    "id": "faIconClass",
+                    "label": "FA Class",
+                    "info": "Visit FontAwesome and copy and past an icon class here."
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "iconImage",
+                    "label": "Image",
+                    "info": "Upload an image"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

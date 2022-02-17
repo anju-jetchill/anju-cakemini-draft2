@@ -1,0 +1,85 @@
+{%- for block in section.blocks -%}
+
+    {%- unless block.settings.collection == collection.handle -%}
+        {%- continue -%}
+    {%- endunless -%}
+
+    <div class="collection-b-block {% if block.settings.imageDesktop == blank -%}collection-b-block--hasNoImage{%- endif -%}">
+
+        {%- if block.settings.imageDesktop != blank -%}
+            <div class="collection-b-block__image">
+                {%- render 'image-responsive', image: block.settings.imageDesktop, custom_alt : block.settings.title, custom_class : "collection-b-block__image-desktop" -%}
+                {%- if block.settings.imageMobile != blank -%}
+                    {%- render 'image-responsive', image: block.settings.imageMobile, custom_alt : block.settings.title, custom_class : "collection-b-block__image-mobile" -%}
+                {%- endif -%}
+            </div>
+        {%- endif -%}
+
+        <div class="collection-b-block__wrap container">
+            <div class="collection-b-block__content">
+                {%- if block.settings.title != blank -%}
+                    <h2>{{ block.settings.title }}</h2>
+                {%- else -%}
+                    <h2>{{ collection.title }}</h2>
+                {%- endif -%}
+
+
+                {%- if block.settings.text != blank -%}
+                    <div class="collection-b-block__text">
+                        {{ block.settings.text }}
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+{%- endfor -%}
+
+{% schema %}
+    {
+        "name": "B Block",
+        "blocks" : [
+            {
+                "name": "B Block",
+                "type": "ablock",
+                "settings": [
+
+                    {
+                        "type": "collection",
+                        "id": "collection",
+                        "label": "Collection",
+                        "info": "Select the collection that you want these settings to show on."
+                    },
+            
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title"
+                    },
+        
+                    {
+                        "type": "richtext",
+                        "id": "text",
+                        "label": "Text"
+                    },
+        
+                    {
+                        "type": "header",
+                        "content": "Image"
+                    },
+        
+                    {
+                        "type": "image_picker",
+                        "id": "imageDesktop",
+                        "label": "Desktop"
+                    },
+        
+                    {
+                        "type": "image_picker",
+                        "id": "imageMobile",
+                        "label": "Mobile"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

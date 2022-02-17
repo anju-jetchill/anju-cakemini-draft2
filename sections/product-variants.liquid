@@ -1,0 +1,29 @@
+{%- render 'product-variants', product : product, section : section -%}
+
+{% schema %}
+{
+    "name": "Product Variants",
+    "blocks" : [
+        {
+            "name": "Colour",
+            "type" : "customColour",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "optionTitle",
+                    "label": "Option title",
+                    "info": "Input the option title as shown in the product variants option."
+                },
+
+                {
+                    "type": "color",
+                    "id": "colour",
+                    "label": "Colour",
+                    "info": "Select a colour for this option"
+                }
+            ]
+        }
+    ]
+}
+
+{% endschema %}

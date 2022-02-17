@@ -1,0 +1,114 @@
+{%- assign pageHasABlock = false -%}
+{%- for block in section.blocks -%}
+
+    {%- unless block.settings.collection == collection.handle -%}
+        {%- continue -%}
+    {%- endunless -%}
+
+    {%- assign pageHasABlock = true -%}
+
+    <div class="collection-a-block {% if block.settings.imageDesktop == blank -%}collection-a-block--hasNoImage {% if settings.collectionABlockImageDesktop -%}collection-a-block--defaultImageHeaderShown{%- endif -%}{%- endif -%}">
+
+        {%- if block.settings.imageDesktop != blank -%}
+            <div class="collection-a-block__image">
+                {%- render 'image-responsive', image: block.settings.imageDesktop, custom_alt : block.settings.title, custom_class : "collection-a-block__image-desktop" -%}
+                {%- if block.settings.imageMobile != blank -%}
+                    {%- render 'image-responsive', image: block.settings.imageMobile, custom_alt : block.settings.title, custom_class : "collection-a-block__image-mobile" -%}
+                {%- endif -%}
+            </div>
+        {%- else -%}
+            {%- if settings.collectionABlockImageDesktop != blank -%}
+                <div class="collection-a-block__image">
+                    {%- render 'image-responsive', image: settings.collectionABlockImageDesktop, custom_alt : settings.title, custom_class : "collection-a-block__image-desktop" -%}
+                    {%- if settings.collectionABlockImageMobile != blank -%}
+                        {%- render 'image-responsive', image: settings.collectionABlockImageMobile, custom_alt : settings.title, custom_class : "collection-a-block__image-mobile" -%}
+                    {%- endif -%}
+                </div>
+            {%- endif -%}
+        {%- endif -%}
+
+        <div class="collection-a-block__wrap container">
+            <div class="collection-a-block__content">
+                {%- if block.settings.title != blank -%}
+                    <h1>{{ block.settings.title }}</h1>
+                {%- else -%}
+                    <h1>{{ collection.title }}</h1>
+                {%- endif -%}
+
+                {%- if block.settings.text != blank -%}
+                    <div class="collection-a-block__text">
+                        {{ block.settings.text }}
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+{%- endfor -%}
+
+{%- unless pageHasABlock -%}
+    <div class="collection-a-block collection-a-block--default {% if settings.collectionABlockImageDesktop -%}collection-a-block--defaultImageHeaderShown{%- endif -%}">
+
+        {%- if settings.collectionABlockImageDesktop != blank -%}
+            <div class="collection-a-block__image">
+                {%- render 'image-responsive', image: settings.collectionABlockImageDesktop, custom_alt : settings.title, custom_class : "collection-a-block__image-desktop" -%}
+                {%- if settings.collectionABlockImageMobile != blank -%}
+                    {%- render 'image-responsive', image: settings.collectionABlockImageMobile, custom_alt : settings.title, custom_class : "collection-a-block__image-mobile" -%}
+                {%- endif -%}
+            </div>
+        {%- endif -%}
+
+        <div class="collection-a-block__wrap">
+            <h1>{{ collection.title }}</h1>
+        </div>
+    </div>
+{%- endunless -%}
+
+{% schema %}
+    {
+        "name": "A Block",
+        "blocks" : [
+            {
+                "name": "A Block",
+                "type": "ablock",
+                "settings": [
+
+                    {
+                        "type": "collection",
+                        "id": "collection",
+                        "label": "Collection",
+                        "info": "Select the collection that you want these settings to show on."
+                    },
+            
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title"
+                    },
+        
+                    {
+                        "type": "richtext",
+                        "id": "text",
+                        "label": "Text"
+                    },
+        
+                    {
+                        "type": "header",
+                        "content": "Image"
+                    },
+        
+                    {
+                        "type": "image_picker",
+                        "id": "imageDesktop",
+                        "label": "Desktop"
+                    },
+        
+                    {
+                        "type": "image_picker",
+                        "id": "imageMobile",
+                        "label": "Mobile"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

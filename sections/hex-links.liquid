@@ -1,0 +1,42 @@
+{%- render 'hex-links', section : section -%}
+
+{% schema %}
+{
+    "name": "Hex Links",
+
+    "settings" : [
+        {
+            "type": "text",
+            "id": "buttonText",
+            "label": "Button Text",
+            "default": "Read more"
+        }
+    ],
+
+    "blocks" : [
+        {
+            "name": "item",
+            "type": "item",
+            "settings": [
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "Link / Url"
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

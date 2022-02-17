@@ -1,0 +1,190 @@
+
+<div class="centered-layout">
+    <div class="centered-layout__wrap centered-layout--split container">
+        <div class="login-form">
+            <div class="login-form__wrap ">
+                <h1 class="h2">Create an account</h1>
+                <p class="login-form__sub-title">Already have an account? <a href="/account/login">Sign in</a></p>
+
+                {%- assign formId = 'RegisterForm' -%}
+                {% form 'create_customer', id: formId, novalidate: 'novalidate' %}
+
+                    {%- if form.posted_successfully? -%}
+                        <p class="form-message form-message--success" tabindex="-1" data-form-status>
+                        {{ success_message | default: 'contact.form.post_success' | t }}
+                        </p>
+                    {%- endif -%}
+                
+                    {% comment %} We need to add this so the errors are output in the right order {% endcomment %}
+                    {% assign error_order = "author, email, body, password, form" | split: ", " %}
+                
+                    {%- if form.errors -%}
+                
+                        <div class="form-message form-message--error">
+                        <ul>
+                            {% for error in error_order %}
+                            {% for field in form.errors %}
+                                {% if error == field %}
+                
+                                {% capture field_label %}
+                                    {% case field %}
+                                    {% when 'author' %}
+                                        {{ 'contact.form.name' | t }}
+                                    {% when 'body' %}
+                                        {{ 'contact.form.message' | t }}
+                                    {% else %}
+                                        {{ form.errors.translated_fields[field] }}
+                                    {% endcase %}
+                                {% endcapture %}
+                
+                                <li>
+                                    {%- if field == 'form' -%}
+                                    {{ form.errors.messages[field] }}
+                                    {%- else -%}
+                                    {% comment %} the href should match the input's id {% endcomment %}
+                                    <a href="#{{ formId }}-{{ field }}" class="form-message__link">{{ field_label | strip | capitalize }} {{ form.errors.messages[field] }}</a>
+                                    {%- endif -%}
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    {%- endif -%}
+                
+                    <label for="{{ formId }}-FirstName">First Name</label>
+                    <input type="text" name="customer[first_name]" id="{{ formId }}-FirstName" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocomplete="given-name">
+                
+                    <label for="{{ formId }}-LastName">Last Name</label>
+                    <input type="text" name="customer[last_name]" id="{{ formId }}-LastName" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocomplete="family-name">
+                
+                    <label for="{{ formId }}-email">Email</label>
+                    <input
+                        type="email"
+                        name="customer[email]"
+                        id="{{ formId }}-email"
+                        class="{% if form.errors contains 'email' %} input--error{% endif %}"
+                        {% if form.email %} value="{{ form.email }}"{% endif %}
+                        autocorrect="off"
+                        autocapitalize="off"
+                        autocomplete="email"
+                        aria-required="true"
+                        {%- if form.errors contains 'email' -%}
+                        class="input--error"
+                        aria-invalid="true"
+                        aria-describedby="{{ formId }}-email-error"
+                        {%- endif -%}
+                    >
+                    {%- if form.errors contains 'email' -%}
+                        <span id="{{ formId }}-email-error" class="input-error-message">
+                        <span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+                        </span>
+                    {%- endif -%}
+                
+                    <label for="{{ formId }}-password">Password</label>
+                    <input
+                        type="password"
+                        name="customer[password]"
+                        id="{{ formId }}-password"
+                        class="{% if form.errors contains 'password' %} input--error{% endif %}"
+                        aria-required="true"
+                        {%- if form.errors contains 'password' -%}
+                        class="input--error"
+                        aria-invalid="true"
+                        aria-describedby="{{ formId }}-password-error"
+                        {%- endif -%}
+                    >
+                    {%- if form.errors contains 'password' -%}
+                        <div id="{{ formId}}-password-error" class="input-error-message">
+                            <span>{{ form.errors.translated_fields['password'] | capitalize }} {{ form.errors.messages['password'] }}.</span>
+                        </div>
+                    {%- endif -%}
+
+                    <label class="optional" for="{{ formId }}-CompanyName">Company Name <span>Optional</span></label>
+                    <input type="text" name="customer[note][Company Name]" id="{{ formId }}-CompanyName" {% if form.note.company_name %}value="{{ form.note['Company Name'] }}"{% endif %}>
+                    
+                    {% if shop.url == "https://flavourblaster.com/" %}
+                        <label class="optional" for="{{ formId }}-CompanyType">Type <span>Optional</span></label>
+                        <input type="text" name="customer[note][Company Type]" id="{{ formId }}-CompanyType" placeholder="i.e Restaurant, Club," {% if form.note['Company Type'] %}value="{{ form.note['Company Type'] }}"{% endif %}>
+                    {% endif %}
+
+                    <label class="newsletter-permission">
+                        <input type="checkbox" name="customer[accepts_marketing]" value="1" />
+                        <span class="box">{% render 'svg.check' %}</span>
+                        <p class="text">I’d like to be notified about new products, behined the scenes news and early access to sales. I can unsubscribe at any time.</p>
+                    </label>
+
+                    <button class="btn btn--green" type="submit">Sign up</button>
+                    <p class="text-small">This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.</p>
+                    
+                {% endform %}
+            </div>
+        </div>
+        <div class="login-form">
+            {%- if section.settings.title != blank  -%}
+                <h2>{{ section.settings.title }}</h2>
+            {%- endif -%}
+            
+            {%- if section.settings.text != blank  -%}
+                {{ section.settings.text }}
+            {%- endif -%}
+
+            {%- if section.blocks.size > 0 -%}
+                <ul class="icon-list">
+                {%- for block in section.blocks -%}
+                    
+                    {%- if block.settings.text != blank -%}
+                        <li>
+                            {%- if block.settings.faClass != blank -%}
+                                <i class="{{ block.settings.faClass }}"></i>
+                            {%- endif -%}
+                            {{ block.settings.text }}
+                        </li>
+                    {%- endif -%}
+                {%- endfor -%}
+                </ul>
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Content",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Sign up today and be rewarded"
+        },  
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Sign up for a <strong>FREE</strong> Flavour Blaster account today to earn 50 Bubble Points and become a member of our Bubble Heads Club</p>"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "List Item",
+            "type" : "list-item",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "faClass",
+                    "label": "FA Class",
+                    "default": "fal fa-check"
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text",
+                    "default": "<p>Lorem ipsum, Lorem ipsum. Lorem ipsum?</p>"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,47 @@
+{%- render 'usp-hero', section : section -%}
+
+{% schema %}
+    {
+        "name": "USP Hero",
+        "blocks" : [
+            {
+                "name": "USP",
+                "type": "usp",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title",
+                        "default": "Lorem ipsum lorem"
+                    },
+
+                    {
+                        "type": "header",
+                        "content": "Icon",
+                        "info": "Update one of the fields below to show an icon."
+                    },
+
+                    {
+                        "type": "text",
+                        "id": "svg",
+                        "label": "SVG Code",
+                        "info": "Enter the raw SVG code here to display an SVG icon."
+                    },
+
+                    {
+                        "type": "text",
+                        "id": "faClass",
+                        "label": "FA Class",
+                        "info": "Visit the FontAwesome website and paste the icons class here."
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "category": "Hero",
+                "name":"USP"
+            }
+        ]
+    }
+{% endschema %}

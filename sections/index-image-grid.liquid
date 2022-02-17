@@ -1,0 +1,88 @@
+{%- render 'image-grid' -%}
+
+{% schema %}
+{
+    "name": "Image Grid",
+    "settings": [
+
+        {
+            "type": "header",
+            "content": "Feature Image"
+        },
+
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "FLAVOUR BLASTER KIT"
+        },
+
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et d</p>"
+        },
+
+        {
+            "type": "header",
+            "content": "Button: 1"
+        },
+
+        {
+            "type": "text",
+            "id": "button1Title",
+            "label": "Title",
+            "default": "VIEW MORE"
+        },
+
+        {
+            "type": "url",
+            "id": "button1Url",
+            "label": "URL / Link"
+        }
+    ],
+
+    "max_blocks": 4,
+    "blocks" : [
+        {
+            "name": "block",
+            "type": "block",
+            "settings": [
+
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "URL / Link"
+                },
+
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Lorem ipsum"
+                },
+    
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                }
+            ]
+        }
+    ],
+
+    "presets": [
+        {
+            "category": "Grid",
+            "name":"Image grid"
+        }
+    ]
+}
+{% endschema %}

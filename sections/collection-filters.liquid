@@ -1,0 +1,33 @@
+{%- render 'collection-filter', section : section -%}
+{%- render 'filters-drawer', section : section -%}
+
+{% schema %}
+{
+  "name": "Filter",
+  "blocks": [
+    {
+      "type": "filter_group",
+      "name": "Filter Group",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "filter_tags",
+          "label": "Filter Tags",
+          "info": "Comma separated list of tags to display"
+        },
+        {
+          "type": "text",
+          "id": "tag_prefix",
+          "label": "Tag Prefix",
+          "info": "Leave blank for no prefix. Define the tag prefix to use for special tags such as SIZE_7, where you'd add SIZE_ as the \"Tag Prefix\" and then add 7 to the \"Filter Tags\" field above"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

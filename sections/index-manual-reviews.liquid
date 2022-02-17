@@ -1,0 +1,84 @@
+{%- render 'manual-reviews' -%}
+
+{% schema %}
+{
+    "name": "Reviews: Manual",
+
+    "settings": [
+        {
+            "type": "text",
+            "id": "subTitle",
+            "label": "Sub-title",
+            "default": "REVIEWS"
+        },
+
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "TRUSTED BY 1000+ COCKTAIL MAKERS"
+        }
+    ],
+
+    "blocks" : [
+        {
+            "name": "Review",
+            "type": "reviewheader",
+            "settings": [
+            
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+
+                {
+                    "type": "text",
+                    "id": "name",
+                    "label": "Name",
+                    "default": "Sam Bubblehead"
+                },
+
+                {
+                    "type": "text",
+                    "id": "jobRole",
+                    "label": "Job Role",
+                    "default": "Senior Bar Manager"
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text",
+                    "default": "<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et </p>"
+                },
+
+                {
+                    "type": "header",
+                    "content": "Buttons"
+                },
+
+                {
+                    "type": "text",
+                    "id": "button1Title",
+                    "label": "Title",
+                    "default": "Read More"
+                },
+
+                {
+                    "type": "url",
+                    "id": "button1Url",
+                    "label": "URL / Link"
+                }
+            ]
+        }
+    ],
+
+    "presets": [
+        {
+            "category": "Reviews",
+            "name":"Reviews: Manual"
+        }
+    ]
+}
+{% endschema %}

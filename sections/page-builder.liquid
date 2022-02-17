@@ -1,0 +1,687 @@
+{%- capture content -%}
+    {%- if section.blocks.size > 0 -%}
+        <!--__BEGIN_CONTENT_BUILDER_BLOCKS__-->
+            {% for block in section.blocks -%}
+                {%- case block.type -%}
+                    {%- when 'page-hero' -%}
+                        {%- render 'page-hero', block : block -%}
+                    {%- when 'row-image-text' -%}
+
+                        {%- render 'row-image-text', block : block -%}
+                    {%- when 'case-study-section-1' -%}
+                        {%- render 'case-study-section-1', block : block -%}
+                    {%- when 'case-study-section-2' -%}
+                        {%- render 'case-study-section-2', block : block -%}
+
+                    {%- when 'article-section-1' -%}
+                        {%- render 'article-section-1', block : block -%}
+                    {%- when 'article-section-2' -%}
+                        {%- render 'article-section-2', block : block -%}
+                    {%- when 'article-section-3' -%}
+                        {%- render 'article-section-3', block : block -%}
+
+                    {%- when 'landing-section-1' -%}
+                        {%- render 'landing-section-1', block : block -%}
+                    {%- when 'landing-section-2' -%}
+                        {%- render 'landing-section-2', block : block -%}
+
+                    {%- when 'image-grid-2x2' -%}
+                        {%- render 'image-grid-2x2', block : block -%}
+
+                    {%- when 'html-block' -%}
+                        {%- render 'html-block', block : block -%}
+
+                    {%- when 'breadcrumbs' -%}
+                        [breadcrumbs]
+                {%- endcase -%}
+            {%- endfor %}
+        <!--__END_CONTENT_BUILDER_BLOCKS__-->
+    {%- endif -%}
+{% endcapture %}
+
+<div class="page-content-builder-preview">
+    {%- render 'parsed-builder-content', content: content -%}
+</div>
+
+<div class="content-builder-user-copy">
+    <div class="copy-info">
+        <p>Copy the below html into the intended page's content. Ensure you select the 'pcb-content' template for the content to display correctly</p>
+        <textarea readonly onclick="this.select();">{{ content | escape }}</textarea>
+    </div>
+</div>
+
+{%- schema -%}
+{
+    "name": "Page Content Builder",
+    "blocks": [
+
+        {
+            "name": "HTML Block",
+            "type": "html-block",
+            "settings": [
+
+                {
+                    "type": "checkbox",
+                    "id": "darkMode",
+                    "label": "Dark Mode",
+                    "default": false
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                },
+
+                {
+                    "type": "html",
+                    "id": "html",
+                    "label": "HTML"
+                }
+
+            ]
+        },
+
+        {
+            "name": "Image Grid: 2x2",
+            "type": "image-grid-2x2",
+            "settings": [
+
+
+                {
+                    "type": "paragraph",
+                    "content": "Image 1"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image1",
+                    "label": "Image"
+                },
+
+                {
+                    "type": "paragraph",
+                    "content": "Image 2"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image2",
+                    "label": "Image"
+                },
+
+                {
+                    "type": "paragraph",
+                    "content": "Image 3"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image3",
+                    "label": "Image"
+                },
+
+
+                {
+                    "type": "paragraph",
+                    "content": "Image 4"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image4",
+                    "label": "Image"
+                }
+            ]
+        },
+
+
+        {
+            "name": "Landing: Section 2",
+            "type": "landing-section-2",
+            "settings": [
+
+                {
+                    "type": "header",
+                    "content": "Block 1"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "block1ImageDesktop",
+                    "label": "Image: Desktop"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "block1ImageMobile",
+                    "label": "Image: Mobile"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Content"
+                },
+
+                {
+                    "type": "text",
+                    "id": "block1Heading",
+                    "label": "Heading",
+                    "default": "Flavour Blaster"                    
+                },
+                {
+                    "type": "url",
+                    "id": "block1Link",
+                    "label": "Link / Url"
+                },
+
+
+                {
+                    "type": "header",
+                    "content": "Block 2"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "block2ImageDesktop",
+                    "label": "Image: Desktop"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "block2ImageMobile",
+                    "label": "Image: Mobile"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Content"
+                },
+                {
+                    "type": "text",
+                    "id": "block2Heading",
+                    "label": "Heading",
+                    "default": "Flavour Blaster"                    
+                },
+                {
+                    "type": "url",
+                    "id": "block2Link",
+                    "label": "Link / Url"
+                },
+
+
+                {
+                    "type": "header",
+                    "content": "Block 3"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "block3ImageDesktop",
+                    "label": "Image: Desktop"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "block3ImageMobile",
+                    "label": "Image: Mobile"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "Content"
+                },
+                {
+                    "type": "text",
+                    "id": "block3Heading",
+                    "label": "Heading",
+                    "default": "Flavour Blaster"
+                },
+                {
+                    "type": "url",
+                    "id": "block3Link",
+                    "label": "Link / Url"
+                }
+            ]
+        },
+
+        {
+            "name": "Landing: Section 1",
+            "type": "landing-section-1",
+            "settings": [
+
+                {
+                    "type": "header",
+                    "content": "Background Image"
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "imageDesktop",
+                    "label": "Image: Desktop"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "imageMobile",
+                    "label": "Image: Mobile"
+                },
+                {
+                    "type": "header",
+                    "content": "Content"
+                },
+        
+                {
+                    "type": "select",
+                    "id": "contentAlign",
+                    "label": "label",
+                    "options": [
+                        {
+                            "value": "landing-section-1--align-left",
+                            "label": "Left",
+                            "group": "Horizontal"
+                        },
+                        {
+                            "value": "landing-section-1--align-right",
+                            "label": "Right",
+                            "group": "Horizontal"
+                        }
+                    ]
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Description",
+                    "default": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>"                    
+                },
+
+                {
+                    "type": "text",
+                    "id": "price",
+                    "label": "Price",
+                    "default": "£123.45"
+                },
+
+                {
+                    "type": "header",
+                    "content": "Link"
+                },
+
+                {
+                    "type": "paragraph",
+                    "content": "Link 1"
+                },
+
+                {
+                    "type": "url",
+                    "id": "link1Url",
+                    "label": "Link / Url"
+                },
+
+                {
+                    "type": "text",
+                    "id": "link1Text",
+                    "label": "Text",
+                    "default": "Shop Now"
+                }
+            ]
+        },
+
+        {
+            "name": "Page Hero",
+            "type": "page-hero",
+            "settings": [
+
+                {
+                    "type": "checkbox",
+                    "id": "darkCurtain",
+                    "label": "Show Curtain",
+                    "default": false
+                },
+
+                {
+                    "type": "select",
+                    "id": "contentAlign",
+                    "label": "Content Align",
+                    "options": [
+                        {
+                            "value": "",
+                            "label": "Center",
+                            "group": "Horizontal"
+                        },
+                        {
+                            "value": "content--align-left",
+                            "label": "Left",
+                            "group": "Horizontal"
+                        },
+                        {
+                            "value": "content--align-right",
+                            "label": "Right",
+                            "group": "Horizontal"
+                        }
+                    ]
+                },
+
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+
+                {
+                    "type": "text",
+                    "id": "subTitle",
+                    "label": "Sub Title"
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                },
+
+                {
+                    "type": "header",
+                    "content": "Image"
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "imageDesktop",
+                    "label": "Desktop"
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "imageMobile",
+                    "label": "Mobile"
+                }
+            ]
+        },
+
+        {
+            "name": "Row: Image & Text",
+            "type" : "row-image-text",
+            "settings": [
+
+                {
+                    "type": "checkbox",
+                    "id": "showBackground",
+                    "label": "Show Background",
+                    "default": true
+                },
+
+                {
+                    "type": "checkbox",
+                    "id": "showBreadcrumbs",
+                    "label": "Show Breadcrumbs",
+                    "default": false
+                },
+
+                {
+                    "type": "checkbox",
+                    "id": "flipDirection",
+                    "label": "Flip Direction",
+                    "default": false
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "imageDesktop",
+                    "label": "Image"
+                },
+
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Custom Title"
+                },
+                {
+                    "type": "text",
+                    "id": "subTitle",
+                    "label": "Sub Title",
+                    "default": "Add a Sub Title"
+                },
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                },
+
+                {
+                    "type": "header",
+                    "content": "Questions"
+                },
+
+                {
+                    "type": "paragraph",
+                    "content": "Question 1"
+                },
+                {
+                    "type": "text",
+                    "id": "favourite1Question",
+                    "label": "Question",
+                    "default": "Favourite Flavour Blaster"
+                },
+                {
+                    "type": "richtext",
+                    "id": "favourite1Answer",
+                    "label": "Answer",
+                    "default": "<p>Lorem Ipsum</p>"
+                },
+
+
+                {
+                    "type": "paragraph",
+                    "content": "Question 2"
+                },
+                {
+                    "type": "text",
+                    "id": "favourite2Question",
+                    "label": "Question",
+                    "default": "Favourite Cocktail"
+                },
+                {
+                    "type": "richtext",
+                    "id": "favourite2Answer",
+                    "label": "Answer",
+                    "default": "<p>Lorem Ipsum</p>"
+                },
+
+
+                {
+                    "type": "paragraph",
+                    "content": "Question 3"
+                },
+                {
+                    "type": "text",
+                    "id": "favourite3Question",
+                    "label": "Question",
+                    "default": "Favourite Bar"
+                },
+                {
+                    "type": "richtext",
+                    "id": "favourite3Answer",
+                    "label": "Answer",
+                    "default": "<p>Lorem Ipsum</p>"
+                }
+
+            ]
+        },
+
+        {
+            "name": "Case Study: S1",
+            "type" : "case-study-section-1",
+            "settings": [
+                {
+                    "type": "checkbox",
+                    "id": "showBackground",
+                    "label": "Show Background",
+                    "default": true
+                },
+                {
+                    "type": "checkbox",
+                    "id": "showBreadcrumbs",
+                    "label": "Show Breadcrumbs",
+                    "default": false
+                },
+                {
+                    "type": "checkbox",
+                    "id": "flipDirection",
+                    "label": "Flip Direction",
+                    "default": false
+                },
+                {
+                    "type": "image_picker",
+                    "id": "imageDesktop",
+                    "label": "Image"
+                },
+                {
+                    "type": "richtext",
+                    "id": "quote",
+                    "label": "Quote",
+                    "default": "<p>I use the Flavour Blaster in my videos and my Instagram and Tik Tok. Followers love it!</p>"
+                },
+                {
+                    "type": "text",
+                    "id": "heading1",
+                    "label": "Heading 1",
+                    "default": "Profile"
+                },
+                {
+                    "type": "richtext",
+                    "id": "text1",
+                    "label": "Text 1"
+                },
+                {
+                    "type": "text",
+                    "id": "heading2",
+                    "label": "Heading 2",
+                    "default": "Flavour Blaster"
+                },
+                {
+                    "type": "richtext",
+                    "id": "text2",
+                    "label": "Text 2"
+                }
+            ]
+        },
+
+        {
+            "name": "Case Study: S2",
+            "type" : "case-study-section-2",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "imageDesktop",
+                    "label": "Image"
+                },
+
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Custom Title"
+                },
+
+                {
+                    "type": "html",
+                    "id": "text",
+                    "label": "Text",
+                    "default" : "<ul><li>Bourbon 4,5 cl</li><li>Elderflower Cordial 1,5 ck</li><li>Black Walnut liquor 2cl</li><li>Herbal bitter 2 dashes</li><li>Aroma: smoky flavour bubble</li><li>Garnish: rice paper, dried Elderflower</li><li>Glass: champagne saucer</li><li>Method: stir</li></ul>"
+                },
+
+                {
+                    "type": "header",
+                    "content": "Buttons"
+                },
+
+                {
+                    "type": "text",
+                    "id": "button1Text",
+                    "label": "Button Text",
+                    "default": "Click here"
+                },
+
+                {
+                    "type": "url",
+                    "id": "button1Url",
+                    "label": "Link / Url"
+                },
+
+                {
+                    "type": "text",
+                    "id": "button1YouTubeId",
+                    "label": "YouTube ID"
+                }
+            ]
+        },
+
+        {
+            "name": "Article: Section 1",
+            "type" : "article-section-1",
+            "settings": [
+                {
+                    "type": "checkbox",
+                    "id": "showBackground",
+                    "label": "Show Background",
+                    "default": true
+                },
+
+                {
+                    "type": "checkbox",
+                    "id": "flipDirection",
+                    "label": "Flip Direction",
+                    "default": false
+                },
+                {
+                    "type": "image_picker",
+                    "id": "imageDesktop",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "heading1",
+                    "label": "Heading 1",
+                    "default": "Profile"
+                },
+                {
+                    "type": "richtext",
+                    "id": "text1",
+                    "label": "Text 1"
+                }
+            ]
+        },
+
+        {
+            "name": "Article: Section 2",
+            "type" : "article-section-2",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "imageDesktop",
+                    "label": "Image"
+                },
+
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Custom Title"
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                }
+            ]
+        },
+
+        {
+            "name": "Article: Section 3",
+            "type" : "article-section-3",
+            "settings": [
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                }
+            ]
+        },
+
+        {
+            "name": "Breadcrumbs",
+            "type" : "breadcrumbs"
+        }
+    ]
+}
+{%- endschema -%}

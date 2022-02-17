@@ -1,0 +1,137 @@
+{% if section.settings.enable %}
+    {%- capture store_selection_content -%}
+    <p>{{ section.settings.paragraph }}</p>
+    <div class="store-selector">
+    {% for block in section.blocks %}
+    <div class="opt" data-idx="{{ forloop.index0 }}">
+        <span class="flag" style="background-image: url('{{ block.settings.image | img_url: '250x', crop: 'center' }}')"></span>
+        {{ block.settings.title }}
+    </div>
+    {% endfor %}
+    </div>
+    {%- endcapture -%}
+
+    {%- render 'info-popup', id: "StoreSelectorPrompt", heading: section.settings.heading, content: store_selection_content, closeable: false -%}
+
+    <script>
+        var dc_store_selection = null;
+        var dc_store_selection_opts = {{ section.blocks | map: "settings" | json }};
+        var selectionOverlayEl = document.getElementById('shopify-section-{{section.id}}');
+        var storeSelectorEl = selectionOverlayEl ? selectionOverlayEl.querySelector('.store-selector') : null;
+        (function(){
+            if (window.location.hash.indexOf('setlocationstore') != -1) {
+                dc_store_selection = 'current';
+                var d = new Date();
+                d.setTime(d.getTime() + (7*24*60*60*1000));
+                document.cookie = "dc_store_selection_KnFr3XO4Ad=current; expires=" + d.toUTCString() + ";path=/";
+                window.history.replaceState({}, document.title, window.location.href.replace(window.location.hash, ''));
+                return;
+            }
+            var cookie_str_index = document.cookie.indexOf('dc_store_selection_KnFr3XO4Ad');
+            if (cookie_str_index == -1) return;
+            var cookie_val = document.cookie.substring(cookie_str_index).split(";")[0].split("=").pop();
+            dc_store_selection = parseInt(cookie_val);
+            if (isNaN(dc_store_selection)) {
+                dc_store_selection = cookie_val;
+            }
+        }());
+        (function(){
+            window.displayInfoPopup = function(id) {
+                var infoPopupEl = document.getElementById(id);
+                if (!infoPopupEl) return;
+                infoPopupEl.classList.add('active');
+            };
+
+            window.hideInfoPopup = function(id) {
+                var infoPopupEl = document.getElementById(id);
+                if (!infoPopupEl) return;
+                infoPopupEl.classList.remove('active');
+            };
+            if (dc_store_selection == null) {
+                window.displayInfoPopup('StoreSelectorPrompt');
+                return;
+            }
+            if (dc_store_selection == 'current') {
+                return;
+            }
+            var url = dc_store_selection_opts[dc_store_selection].url;
+            if (!url || url.length < 1 || url.indexOf("#") == 0) {
+                return;
+            }
+            window.location.href = url;
+        }());
+        (function(){
+            var optEls = storeSelectorEl.getElementsByClassName('opt');
+            for (var i = 0; i < optEls.length; i++) {
+                optEls[i].addEventListener('click', function() {
+                    var idx = this.dataset.idx;
+                    var d = new Date();
+                    d.setTime(d.getTime() + (7*24*60*60*1000));
+                    document.cookie = "dc_store_selection_KnFr3XO4Ad=" + idx + "; expires=" + d.toUTCString() + ";path=/";
+                    var url = dc_store_selection_opts[idx].url;
+                    if (!url || typeof url == 'undefined') {
+                        window.hideInfoPopup('StoreSelectorPrompt');
+                        return;
+                    }
+                    window.location.href = url;
+                });
+            }
+        }());
+    </script>
+{% endif %}
+{% schema %}
+{
+    "name": "Store Selection Popup",
+    "settings": [
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":false
+        },
+        {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Logo image"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Are you in the right place?"
+        },
+        {
+            "type": "textarea",
+            "id": "paragraph",
+            "label": "Paragraph",
+            "default": "Please select your location so we can direct you to the correct store"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "store_option",
+            "name": "Store Option",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "United Kingdom"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image Icon",
+                    "info": "Displays on the left of each store selection option"
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "URL",
+                    "info": "Leave empty to remain on current store if selected"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

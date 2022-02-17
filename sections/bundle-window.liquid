@@ -1,0 +1,211 @@
+{%- for block in section.blocks -%}
+    {%- unless block.settings.collection == collection.handle -%}
+        {%- continue -%}
+    {%- endunless -%}
+
+    <div class="bundle-window" data-bundle-overflow-add-items="{{ block.settings.overflow_add_item }}">
+        <div class="bundle-window__wrap">
+            <form class="bundle-window__box" action="/cart/add">
+                <div class="bundle-window__head">
+                    {%- if block.settings.title != blank -%}
+                        <span class="h3 bundle-window__title">{{ block.settings.title }}</span>
+                    {%- endif -%}
+                    {%- render 'svg.chevron-down' -%}
+                </div>
+
+                <div class="bundle-window__body">
+                    {%- if block.settings.text != blank -%}
+                        <div class="bundle-window__text">
+                            {{ block.settings.text }}
+                        </div>
+                    {%- endif -%}
+                    <div class="bundle-window__options">
+
+                        {%- for index in (1..3) -%}
+                            {%- capture title -%}option_{{ index }}_title{%- endcapture -%}
+                            {%- capture discount_quantity_threshold -%}option_{{ index }}_discount_quantity_threshold{%- endcapture -%}
+                            {%- capture discount_percentage_amount -%}option_{{ index }}_discount_percentage_amount{%- endcapture -%}
+        
+                            {%- if block.settings[title] != blank -%}
+                                <label class="btn bundle-window__option {% if forloop.first %} selected {% endif -%}" for="bundle_option_{{ index }}">
+                                    <input id="bundle_option_{{ index }}" name="bundle_option" type="radio" {% if forloop.first %} checked {% endif -%}
+                                    value="{{ block.settings[discount_quantity_threshold] }}"
+                                    data-title="{{ block.settings.title }}"
+                                    data-threshold="{{ block.settings[discount_quantity_threshold] }}"
+                                    data-discount="{{ block.settings[discount_percentage_amount] }}"
+                                    {% if forloop.last %}data-increment-amount="{{ block.settings.increment_amount }}"{% endif -%}
+                                    >
+                                    {%- if block.settings[discount_quantity_threshold] != blank -%}
+                                        <span class="option__title">Pack of {{ block.settings[discount_quantity_threshold] }}{% if forloop.last %}+{% endif -%}</span>
+                                    {%- endif -%}
+                                    {%- if block.settings[discount_percentage_amount] != blank and block.settings[discount_percentage_amount] > 0 -%}
+                                        <span class="option__subtitle">{{ block.settings[discount_percentage_amount] }}% Discount</span>
+                                    {%- endif -%}
+                                </label>
+                            {%- endif -%}
+                        {%- endfor -%}
+                    </div>
+                    <div id="js-bundle-items" class="bundle-window__items"></div>
+                </div>
+
+                <div class="bundle-window__foot">
+                    <p class="bundle-window__summary">Total: <span id="js-bundle-total-amount">{{ cart.currency.symbol }}0.00</span><span id="js-bundle-total-discount"></span></p>
+                    <p id="js-bundle-loyalty-lion"></p>
+                    <p id="js-bundle-message" style="display: none;"></p>
+                    <button class="btn btn--green js-bundle-add-item" type="button" disabled>Add to cart</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <template id="js-bundle-item">
+        <div class="bundle-window__item bundle-window--no-item">
+            {%- if block.settings.hide_item_title == false -%}<span class="bundle-window__product-title"></span>{%- endif -%}
+            <div class="bundle-window__product-image"><img src="{{ block.settings.watermark_image | img_url : '160x' }}"></div>
+            <button class="bundle-window__remove" aria-label="Remove item" data-product-input-id="js-product-{{ product.selected_or_first_available_variant.id }}">{%- render 'svg.cross' -%}<span>Remove</span></button>
+        </div>
+    </template>
+
+{%- endfor -%}
+{% schema %}
+{
+    "name": "Build your pack",
+    "blocks" : [
+        {
+            "name": "Collection",
+            "type": "collection",
+            "settings": [
+                {
+                    "type": "paragraph",
+                    "content": "Important. If the threshold changes the Shopify Scripts has to reflect these changes. Please contact Digital Cake to do this."
+                },
+                {
+                    "type": "collection",
+                    "id": "collection",
+                    "label": "Select Collection",
+                    "info": "Choose a bundle collection to attach the settings to."
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Build your pack"
+                },
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                },
+    
+                {
+                    "type": "header",
+                    "content": "Settings"
+                },
+                
+                {
+                    "id" : "overflow_add_item",
+                    "type" : "checkbox",
+                    "label" : "Overflow Add Items",
+                    "info" : "Enable this to allow the customers to automatically flow onto the next option when the limit is reached.",
+                    "default" : false
+                },
+
+                {
+                    "type": "number",
+                    "id": "increment_amount",
+                    "label": "Increment Amount",
+                    "default": 5,
+                    "info" : "This setting effects the last option when the customer can add more than the limit. But the user must add items in multiple of the number set here. In this case multiple of 5 if this was set to 5."
+                },
+        
+                {
+                    "type": "header",
+                    "content": "Options"
+                },
+    
+                {
+                    "type": "checkbox",
+                    "id": "hide_item_title",
+                    "label": "Hide Item Title",
+                    "default": false,
+                    "info": "Enable to hide the item title within the item list"
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "watermark_image",
+                    "label": "Watermark Image"
+                },
+
+                {
+                    "type": "paragraph",
+                    "content": "Option 1"
+                },
+                {
+                    "type": "text",
+                    "id": "option_1_title",
+                    "label": "Title",
+                    "default" : "Option"
+                },
+                {
+                    "type": "number",
+                    "id": "option_1_discount_quantity_threshold",
+                    "label": "Quantity Threshold",
+                    "default": 0
+                },
+                {
+                    "type": "number",
+                    "id": "option_1_discount_percentage_amount",
+                    "label": "Percentage Amount",
+                    "default": 0
+                },
+    
+                {
+                    "type": "paragraph",
+                    "content": "Option 2"
+                },
+                {
+                    "type": "text",
+                    "id": "option_2_title",
+                    "label": "Title",
+                    "default" : "Option"
+                },
+                {
+                    "type": "number",
+                    "id": "option_2_discount_quantity_threshold",
+                    "label": "Quantity Threshold",
+                    "default": 0
+                },
+                {
+                    "type": "number",
+                    "id": "option_2_discount_percentage_amount",
+                    "label": "Percentage Amount",
+                    "default": 0
+                },
+    
+                {
+                    "type": "paragraph",
+                    "content": "Option 3"
+                },
+                {
+                    "type": "text",
+                    "id": "option_3_title",
+                    "label": "Title",
+                    "default" : "Option"
+                },
+                {
+                    "type": "number",
+                    "id": "option_3_discount_quantity_threshold",
+                    "label": "Quantity Threshold",
+                    "default": 0
+                },
+                {
+                    "type": "number",
+                    "id": "option_3_discount_percentage_amount",
+                    "label": "Percentage Amount",
+                    "default": 0
+                }
+            ]            
+        }
+    ]
+}
+{% endschema %}

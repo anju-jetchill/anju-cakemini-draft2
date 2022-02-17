@@ -1,0 +1,76 @@
+<div class="loyalty-lion-signup">
+    <div class="loyalty-lion-signup__wrap">
+
+        {%- if section.settings.imageBG1 -%}
+            <div class="loyalty-lion-signup__background-images">
+                {%- render 'image-responsive', image: section.settings.imageBG1, custom_alt : shop.name, custom_class : 'loyalty-lion-signup__bgImg1' -%}
+                {%- if section.settings.imageBG2 -%}
+                    {%- render 'image-responsive', image: section.settings.imageBG2, custom_alt : shop.name, custom_class : 'loyalty-lion-signup__bgImg2' -%}
+                {%- endif -%}
+            </div>
+        {%- endif -%}
+
+        {%- if section.settings.image -%}
+            <div class="loyalty-lion-signup__logo">
+                {%- render 'image-responsive', image: section.settings.image, custom_alt : shop.name -%}
+            </div>
+        {%- endif -%}
+
+        <div class="loyalty-lion-signup__content">
+            {%- if section.settings.heading -%}
+                <h2>{{ section.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if section.settings.text -%}
+                <div class="loyalty-lion-signup__text">{{ section.settings.text }}</div>
+            {%- endif -%}
+
+            <div class="loyalty-lion-signup__form">
+                <a class="btn btn--green" href="/account/register">SIGN UP</a>
+                <span>Already got an account? <a href="/account/login">Sign in</a></span>
+            </div>
+
+            {%- render 'product-usps' -%}
+
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Loyalty Lion: Sign up",
+    "settings": [
+
+        {
+            "type": "image_picker",
+            "id": "imageBG1",
+            "label": "Background Image: Bottom Left"
+        },
+
+        {
+            "type": "image_picker",
+            "id": "imageBG2",
+            "label": "Background Image: Top Right"
+        },
+
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Logo"
+        },
+
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Earn rewards with the flavour blaster"
+        },
+
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minus sapiente sed voluptate ratione minima inventore porro ad? Dolores animi amet nemo sequi corporis debitis ullam itaque, fugiat accusamus, cum ratione!</p>"
+        }
+    ]
+}
+{% endschema %}

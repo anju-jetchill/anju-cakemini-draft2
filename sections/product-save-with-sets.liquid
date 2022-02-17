@@ -1,0 +1,119 @@
+{%- render 'product-tab-save-with-sets', section : section -%}
+
+{% schema %}
+{
+    "name": "Save with Sets",
+    "class" : "save-with-sets",
+    "blocks" : [
+        {
+            "name": "Save with Sets",
+            "type": "save-with-sets",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product",
+                    "info": "Select a product that this section should be displayed on"
+                },    
+                {
+                    "type": "text",
+                    "id": "tabTitle",
+                    "label": "Tab Title",
+                    "default": "Save with sets"
+                },
+                {
+                    "type": "text",
+                    "id": "tabTitle2",
+                    "label": "Inside Tab Title",
+                    "default": "Bundle offer: get 5% off when purchased with a Kit -  Pro 2"
+                },
+                {
+                    "type": "header",
+                    "content": "Product 1"
+                },        
+                {
+                    "type": "product",
+                    "id": "product1set",
+                    "label": "Product Set",
+                    "info": "Select a product that will show in this section"
+                },     
+                {
+                    "type": "image_picker",
+                    "id": "product1image",
+                    "label": "Alternative Product Image",
+                    "info": "Replace image here if required"
+                },    
+                {
+                    "type": "text",
+                    "id": "product1title",
+                    "label": "Alternative Product Title",
+                    "info": "Replace title here if required"
+                },
+                {
+                    "type": "richtext",
+                    "id": "product1text",
+                    "label": "Text",
+                    "default": "<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et d</p>"
+                },
+                {
+                    "type": "text",
+                    "id": "button1text",
+                    "label": "Button Text",
+                    "default": "Add to Order"
+                },
+                {
+                    "type": "url",
+                    "id": "product1url",
+                    "label": "Url / Link"
+                },
+                {
+                    "type": "header",
+                    "content": "Product 2"
+                },        
+                {
+                    "type": "product",
+                    "id": "product2set",
+                    "label": "Product Set",
+                    "info": "Select a product that will show in this section"
+                },     
+                {
+                    "type": "image_picker",
+                    "id": "product2image",
+                    "label": "Alternative Product Image",
+                    "info": "Replace image here if required"
+                },    
+                {
+                    "type": "text",
+                    "id": "product2title",
+                    "label": "Alternative Product Title",
+                    "info": "Replace title here if required"
+                },
+                {
+                    "type": "richtext",
+                    "id": "product2text",
+                    "label": "Text",
+                    "default": "<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et d</p>"
+                },
+                {
+                    "type": "text",
+                    "id": "button2text",
+                    "label": "Button Text",
+                    "default": "Add to Order"
+                },
+                {
+                    "type": "url",
+                    "id": "product2url",
+                    "label": "Url / Link"
+                }
+            ]
+        }
+    ],
+
+    "presets": [
+        {
+            "category": "Save with Sets",
+            "name":"Save with Sets"
+        }
+    ]
+}
+{% endschema %}

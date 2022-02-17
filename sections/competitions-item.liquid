@@ -1,0 +1,206 @@
+
+{%- for block in section.blocks -%}
+    <div class="competitions-block {% if section.settings.image and forloop.first -%}hasLogo{%- endif -%}">
+        <div class="competitions-block__wrap">
+
+            {%- if section.settings.imageBG1 -%}
+                <div class="loyalty-lion-signup__background-images">
+                    {%- render 'image-responsive', image: section.settings.imageBG1, custom_alt : shop.name, custom_class : "loyalty-lion-signup__bgImg1" -%}
+                    {%- if section.settings.imageBG2 -%}
+                        {%- render 'image-responsive', image: section.settings.imageBG2, custom_alt : shop.name, custom_class : "loyalty-lion-signup__bgImg2" -%}
+                    {%- endif -%}
+                </div>
+            {%- endif -%}
+
+            {%- if forloop.first -%}
+                {%- if section.settings.image -%}
+                    <div class="loyalty-lion-signup__logo">
+                        {%- render 'image-responsive', image: section.settings.image, custom_alt : shop.name -%}
+                    </div>
+                {%- endif -%}
+            {%- endif -%}
+
+            <div class="competitions-block__head">
+                {%- if block.settings.subTitle  -%}
+                    <span>{{ block.settings.subTitle }}</span>
+                {%- endif -%}
+
+                {%- if block.settings.heading -%}
+                    <h2>{{ block.settings.heading }}</h2>
+                {%- endif -%}
+
+                {%- if block.settings.description -%}
+                    <div class="competitions-block__description">
+                        {{ block.settings.description }}
+                    </div>
+                {%- endif -%}
+            </div>
+
+            <div class="competitions-block__steps">
+                {%- if block.settings.step2Image -%}
+                    <div class="competitions-block__step">
+                        <h3>Step 1</h3>
+                        {%- render 'image-responsive', image: block.settings.step1Image, custom_alt : "Step 1" -%}
+                        {%- if block.settings.step1Text -%}
+                            <p>{{ block.settings.step1Text }}</p>
+                        {%- endif -%}
+                    </div>
+                {%- endif -%}
+
+                {%- if block.settings.step2Image -%}
+                    <div class="competitions-block__step">
+                        <h3>Step 2</h3>
+                        {%- render 'image-responsive', image: block.settings.step2Image, custom_alt : "Step 2" -%}
+                        {%- if block.settings.step2Text -%}
+                            <p>{{ block.settings.step2Text }}</p>
+                        {%- endif -%}
+                    </div>
+                {%- endif -%}
+
+                {%- if block.settings.step3Image -%}
+                    <div class="competitions-block__step">
+                        <h3>Step 3</h3>
+                        {%- render 'image-responsive', image: block.settings.step3Image, custom_alt : "Step 3" -%}
+                        {%- if block.settings.step3Text -%}
+                            <p>{{ block.settings.step3Text }}</p>
+                        {%- endif -%}
+                    </div>
+                {%- endif -%}
+            </div>
+
+            {%- if block.settings.showUSPBar -%}
+                {%- render 'product-usps' -%}
+            {%- endif -%}
+        </div>
+
+        {%- if block.settings.banner -%}
+            <div class="competitions-block__banner">
+                {%- render 'image-responsive', image: block.settings.banner, custom_alt : block.settings.heading, custom_class : 'competitions-block__desktop' -%}
+                
+                {%- if block.settings.bannerMobile -%}
+                    {%- render 'image-responsive', image: block.settings.bannerMobile, custom_alt : block.settings.heading, custom_class : 'competitions-block__mobile' -%}
+                {%- endif -%}
+            </div>
+        {%- endif -%}
+    </div>
+{%- endfor -%}
+
+{% schema %}
+{
+    "name": "Competitions List",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "imageBG1",
+            "label": "Background Image: Bottom Left"
+        },
+
+        {
+            "type": "image_picker",
+            "id": "imageBG2",
+            "label": "Background Image: Top Right"
+        },
+
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Logo"
+        }
+    ],
+    "blocks" : [
+        {
+            "name": "competitions",
+            "type": "competitions",
+            "settings" : [
+
+                {
+                    "type": "checkbox",
+                    "id": "showUSPBar",
+                    "label": "Show USP Bar",
+                    "default": true
+                },
+
+                {
+                    "type": "text",
+                    "id": "subTitle",
+                    "label": "Sub Title",
+                    "default": "Getting started"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "label",
+                    "default": "Earn rewards with flavour blaster"
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Description",
+                    "default": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit cupiditate nesciunt aliquid. In earum sit saepe iste eligendi, esse vero omnis dolores doloremque repellendus. Ratione nihil delectus fuga dolorem eveniet.</p>"
+                },
+
+                {
+                    "type": "header",
+                    "content": "Step 1"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "step1Image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "step1Text",
+                    "label": "Text",
+                    "default": "Lorem ipsum, dolor sit amet."
+                },
+
+                {
+                    "type": "header",
+                    "content": "Step 2"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "step2Image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "step2Text",
+                    "label": "Text",
+                    "default": "Lorem ipsum, dolor sit amet."
+                },
+
+                {
+                    "type": "header",
+                    "content": "Step 3"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "step3Image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "step3Text",
+                    "label": "Text",
+                    "default": "Lorem ipsum, dolor sit amet."
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "banner",
+                    "label": "Banner Image"
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "bannerMobile",
+                    "label": "Banner Mobile Image"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

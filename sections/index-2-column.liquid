@@ -1,0 +1,101 @@
+{%- render '2-column' -%}
+
+{% schema %}
+{
+    "name": "2 Columns",
+    "max_blocks": 2,
+    "blocks" : [
+        {
+            "name": "column",
+            "type": "column",
+            "settings": [
+                
+                {
+                    "type": "checkbox",
+                    "id": "showLogo",
+                    "label": "Show Logo",
+                    "default": false
+                },
+
+                {
+                    "type": "header",
+                    "content": "Image"
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "imageDesktop",
+                    "label": "Desktop"
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "imageMobile",
+                    "label": "Mobile"
+                },
+
+                {
+                    "type": "header",
+                    "content": "Content"
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "logo",
+                    "label": "Logo"
+                },
+
+                {
+                    "type": "text",
+                    "id": "subTitle",
+                    "label": "Sub Title",
+                    "default": "OUR STORY"
+                },
+
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "GET DEPENDABLE RESULTS HOSPITALITY IN MIND"
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text",
+                    "default": "<p>If you’re after vibrant ingredients for cutting-edge cocktail and restaurant recipes or eye-catching service ideas for your venue.</p>"
+                },
+
+                {
+                    "type": "header",
+                    "content": "Buttons"
+                },
+
+                {
+                    "type": "paragraph",
+                    "content": "Button 1"
+                },
+
+                {
+                    "type": "text",
+                    "id": "button1Title",
+                    "label": "Title",
+                    "default": "Learn More"
+                },
+
+                {
+                    "type": "url",
+                    "id": "button1Url",
+                    "label": "Url / Link"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "category": "Layout",
+            "name":"2 Column"
+        }
+    ]
+}
+{% endschema %}

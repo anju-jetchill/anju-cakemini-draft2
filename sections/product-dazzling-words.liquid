@@ -1,0 +1,116 @@
+{%- render 'dazzling-words', section : section -%}
+
+{% schema %}
+{
+    "name": "Text Block",
+    "max_blocks": 3,
+    "settings": [
+
+        {
+            "type": "checkbox",
+            "id": "isGlobal",
+            "label": "Set for all products",
+            "default": true,
+            "info": "Set to true to display the blocks for all of the products."
+        }
+    ],
+
+    "blocks" : [
+        {
+            "name": "Text Block: Neon:",
+            "type": "text-block",
+            "settings": [
+                
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product",
+                    "info": "Select a product that this section should be displayed on"
+                },
+
+                {
+                    "type": "header",
+                    "content": "Dazzling Word Block"
+                },
+        
+                {
+                    "type": "paragraph",
+                    "content": "Block 1"
+                },
+        
+                {
+                    "type": "text",
+                    "id": "dazzlingWord1Title",
+                    "label": "Text",
+                    "default": "Create"
+                },
+        
+                {
+                    "type": "text",
+                    "id": "dazzlingWord1SubTitle",
+                    "label": "Sub-title",
+                    "default": "Your signature cocktail"
+                },
+        
+                {
+                    "type": "paragraph",
+                    "content": "Block 2"
+                },
+        
+                {
+                    "type": "text",
+                    "id": "dazzlingWord2Title",
+                    "label": "Text",
+                    "default": "Infuse"
+                },
+        
+                {
+                    "type": "text",
+                    "id": "dazzlingWord2SubTitle",
+                    "label": "Sub-title",
+                    "default": "With aromatic effects"
+                },
+        
+                {
+                    "type": "paragraph",
+                    "content": "Block 3"
+                },
+        
+                {
+                    "type": "text",
+                    "id": "dazzlingWord3Title",
+                    "label": "Text",
+                    "default": "Reveal"
+                },
+        
+                {
+                    "type": "text",
+                    "id": "dazzlingWord3SubTitle",
+                    "label": "Sub-title",
+                    "default": "Theatrical mixology"
+                },
+        
+        
+                {
+                    "type": "header",
+                    "content": "Text block"
+                },
+        
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "GET DEPENDABLE RESULTS ON DARING RECIPES"
+                },
+        
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text",
+                    "default": "<p>If you’re after vibrant ingredients for cutting-edge cocktail and restaurant recipes or eye-catching service ideas for your venue, then you’ll need the Flavour Blaster Cocktail Kit and accessories.</p>"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

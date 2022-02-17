@@ -1,0 +1,143 @@
+{%- capture style -%}
+    {%- if section.settings.backgroundColor != blank -%}background-color:{{ section.settings.backgroundColor }};{%- endif -%}
+    {%- if section.settings.textColor != blank -%}color:{{ section.settings.textColor }};{%- endif -%}
+{%- endcapture -%}
+
+<div id="usp-slider-single-column" class="usp-slider-single-column" style="{{ style }}">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {%- for block in section.blocks -%}
+
+            {%- capture icon -%}
+                {%- if block.settings.iconFAClass != blank -%}
+                    
+                    <i class="{{ block.settings.iconFAClass  }}"></i>
+
+                {%- elsif block.settings.iconImage != blank -%}
+                    <img src="{{ block.settings.iconImage | img_url: '60x' }}" width="{{ block.settings.iconImage.width }}" height="{{ block.settings.iconImage.height }}" alt="{{ block.settings.text }}">
+
+                {%- elsif block.settings.iconSVG != blank -%}
+                    {{ block.settings.iconSVG  }}
+                {%- endif -%}
+            
+            {%- endcapture -%}
+
+
+                <div class="usp-slider-single-column__usp swiper-slide">
+                    {{ block.settings.text }}{{ icon }}
+                </div>
+            {%- endfor -%}
+        </div>
+    </div>
+
+    {%- if section.settings.ctaCallIsVisible -%}
+        <a class="btn btn--pill usp-slider-single-column__cta-phone" href="tel:{{ settings.phone | replace: ' ', '' }}"><i class="fas fa-phone fa-flip-horizontal"></i> {{ settings.phone }}</a>
+    {%- endif -%}
+
+    {%- if section.settings.closeIconIsVisible -%}
+        <button class="usp-slider-single-column__btn-close" onclick="UspSliderSingleColumn.hide(this)">{%- render 'svg.cross' -%}</button>
+    {%- endif -%}
+</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        setTimeout(function() {
+            var mySwiper = new Swiper ('#usp-slider-single-column .swiper-container', {
+                slidesPerView: 1,
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false
+                }
+            })
+        },3000);
+    });
+</script>
+
+{% schema %}
+{
+   "name": "Header: USP Slider",
+
+    "settings": [
+
+        {
+            "type": "header",
+            "content": "Styling"
+        },
+
+        {
+            "type": "color",
+            "id": "backgroundColor",
+            "label": "Background Colour",
+            "default": "#FFFFFF",
+            "info": "Set the slider background colour."
+        },
+
+        {
+            "type": "color",
+            "id": "textColor",
+            "label": "Text Color",
+            "default": "#000000",
+            "info": "Set text colour."
+        },
+
+        {
+            "type": "header",
+            "content": "CTA: Call"
+        },
+
+        {
+            "type": "checkbox",
+            "id": "ctaCallIsVisible",
+            "label": "Visible",
+            "default": true
+        },
+
+        {
+            "type": "checkbox",
+            "id": "closeIconIsVisible",
+            "label": "Show Close Icon",
+            "default": true
+        }
+    ],
+
+   "blocks" : [
+        {
+            "type" : "slide",
+            "name" : "Slide",
+            "settings" : [
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                },
+
+                {
+                    "type": "header",
+                    "content": "Icon"
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "iconImage",
+                    "label": "Image"
+                },
+
+                {
+                    "type": "text",
+                    "id": "iconSVG",
+                    "label": "SVG",
+                    "info": "Enter raw svg code."
+                },
+
+                {
+                    "type": "text",
+                    "id": "iconFAClass",
+                    "label": "FA Class",
+                    "info": "Enter Font Awesome Class"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

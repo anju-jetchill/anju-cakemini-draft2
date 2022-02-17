@@ -1,0 +1,109 @@
+{%- assign pageHasHero = false -%}
+{%- for block in section.blocks -%}
+
+    {%- if block.settings.page contains "blogs" -%}
+        {%- unless block.settings.page   == blog.url -%}
+            {%- continue -%}
+        {%- endunless -%}
+    {%- else -%}
+        {%- unless block.settings.page   == page.url -%}
+            {%- continue -%}
+        {%- endunless -%}
+    {%- endif -%}
+
+    {%- assign pageHasHero = true -%}
+
+    {%- render 'page-hero', block : block -%}
+{%- endfor -%}
+
+{%- unless pageHasHero -%}
+    <div class="page-hero page-hero--default">
+        <div class="page-hero__wrap">
+            {%- if page -%}
+                <h1>{{ page.title }}</h1>
+            {%- elsif article -%}
+                <h1>{{ article.title }}</h1>
+            {%- elsif blog -%}
+                <h1>{{ blog.title }}</h1>
+            {%- endif -%}
+        </div>
+    </div>
+{%- endunless -%}
+
+{% schema %}
+    {
+        "name": "Hero",
+        "blocks" : [
+            {
+                "name": "Hero",
+                "type": "hero",
+                "settings": [
+                    {
+                        "type": "url",
+                        "id": "page",
+                        "label": "Page",
+                        "info": "Select the page that you want the hero to be shown on."
+                    },
+            
+                    {
+                        "type": "select",
+                        "id": "contentAlign",
+                        "label": "Content Align",
+                        "options": [
+                            {
+                                "value": "",
+                                "label": "Center",
+                                "group": "Horizontal"
+                            },
+                            {
+                                "value": "content--align-left",
+                                "label": "Left",
+                                "group": "Horizontal"
+                            },
+                            {
+                                "value": "content--align-right",
+                                "label": "Right",
+                                "group": "Horizontal"
+                            }
+                        ]
+                    },
+
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title"
+                    },
+        
+                    {
+                        "type": "text",
+                        "id": "subTitle",
+                        "label": "Sub Title"
+                    },
+
+                    {
+                        "type": "richtext",
+                        "id": "text",
+                        "label": "Text"
+                    },
+        
+                    {
+                        "type": "header",
+                        "content": "Image"
+                    },
+        
+                    {
+                        "type": "image_picker",
+                        "id": "imageDesktop",
+                        "label": "Desktop"
+                    },
+        
+                    {
+                        "type": "image_picker",
+                        "id": "imageMobile",
+                        "label": "Mobile"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

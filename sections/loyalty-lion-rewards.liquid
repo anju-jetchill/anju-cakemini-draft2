@@ -1,0 +1,76 @@
+{%- if section.settings.showRewardsList -%}
+    <div class="loyalty-lion-ways-to-earn">
+        <h2>{{ section.settings.rewardsListHeading }}</h2>
+        <div data-lion-rewards-list></div>
+    </div>
+{%- endif -%}
+
+{%- if section.settings.showRulesList -%}
+    <div class="loyalty-lion-membership-tiers">
+        <h2>{{ section.settings.rulesListHeading }}</h2>
+        <div data-lion-rules-list></div>
+    </div>
+{%- endif -%}
+
+{%- if section.settings.showMembershipTiers -%}
+    <div class="loyalty-lion-membership-tiers">
+        <h2>{{ section.settings.membershipTiersHeading }}</h2>
+        <div data-lion-tier-rules-compare></div>
+    </div>
+{%- endif -%}
+
+{% schema %}
+{
+    "name": "Rewards Page",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Guest View",
+            "info": "Settings for users who aren't logged in."
+        },
+
+        {
+            "type": "checkbox",
+            "id": "showRewardsList",
+            "label": "Show Rewards List",
+            "default": true
+        },
+
+        {
+            "type": "text",
+            "id": "rewardsListHeading",
+            "label": "Rewards List - Heading",
+            "default": "Rewards List"
+        },
+
+        {
+            "type": "checkbox",
+            "id": "showMembershipTiers",
+            "label": "Show Membership Tiers",
+            "default": true
+        },
+
+        {
+            "type": "text",
+            "id": "membershipTiersHeading",
+            "label": "Ways To Earn - Heading",
+            "default": "Membership Tiers"
+        },
+
+        {
+            "type": "checkbox",
+            "id": "showRulesList",
+            "label": "Show Rewards List",
+            "default": true
+        },
+
+        {
+            "type": "text",
+            "id": "rulesListHeading",
+            "label": "Rules List - Heading",
+            "default": "Rules List"
+        }
+
+    ]
+}
+{% endschema %}

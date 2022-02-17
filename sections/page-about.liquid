@@ -1,0 +1,128 @@
+{%- for block in section.blocks -%}
+        
+    {%- if block.type == "content" -%}
+
+        <div class="about-content">
+            <div class="about-content__wrap">
+                <div class="about-content__column">
+                    {%- render 'image-responsive', image : block.settings.image -%}
+                </div>
+                <div class="about-content__column">
+                    <div class="about-content__content">
+                        {%- if block.settings.subTitle != blank -%}
+                            <span class="about-content__sub-title">{{ block.settings.subTitle }}</span>
+                        {%- endif -%}
+                        {%- if block.settings.heading != blank -%}
+                            <h2 class="about-content__heading">{{ block.settings.heading }}</h2>
+                        {%- endif -%}
+                        {%- if block.settings.text != blank -%}
+                            <div class="about-content__text">{{ block.settings.text }}</div>
+                        {%- endif -%}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% elsif block.type == "milestone" %}
+        <div class="about-milestone">
+            <div class="about-milestone__wrap container {% if block.settings.reverse %}reverse{% endif %}">
+                <div class="about-milestone__column">
+                    <div class="indicator-line__dot">{{ forloop.index0 }}</div>
+                    {%- render 'image-responsive', image : block.settings.image -%}
+                </div>
+                <div class="about-milestone__column">
+                    <div class="about-milestone__content">
+                        {%- if block.settings.heading != blank -%}
+                            <h2 class="about-milestone__heading">{{ block.settings.heading }}</h2>
+                        {%- endif -%}
+                        {%- if block.settings.text != blank -%}
+                            <div class="about-milestone__text">
+                                {{ block.settings.text }}
+                                {%- if block.settings.html != blank -%}
+                                    {{ block.settings.html }}
+                                {%- endif -%}
+                            </div>
+                        {%- endif -%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+{%- endfor -%}
+
+{% schema %}
+{
+    "name": "Page Content",
+    "blocks": [
+        {
+            "name": "Content",
+            "type": "content",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+
+                {
+                    "type": "text",
+                    "id": "subTitle",
+                    "label": "Sub Title",
+                    "default": "Getting started"
+                },
+
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Title",
+                    "default": "Our story"
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                }
+            ]
+        },
+
+        {
+            "name": "Milestone",
+            "type": "milestone",
+            "settings": [
+
+                {
+                    "type": "checkbox",
+                    "id": "reverse",
+                    "label": "Reverse"
+                },
+
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Heading",
+                    "default": "2021"
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                },
+
+                {
+                    "type": "html",
+                    "id": "html",
+                    "label": "HTML"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

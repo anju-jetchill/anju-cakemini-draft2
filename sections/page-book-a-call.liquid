@@ -1,0 +1,113 @@
+<div class="book-a-call__header">
+    <div class="book-a-call__header-text">
+        <h1>{{ section.settings.title }}</h1>
+        <p>{{ section.settings.subtitle }}</p>
+        <button onclick="window.location.href= '{{ section.settings.buttonLink1 }}'" class="btn btn--green">{{ section.settings.buttonText1 }}</button>
+    </div>
+    <img class="book-a-call__header-img" src="{{ section.settings.headerImg | img_url: 'master' }}"/>
+    
+</div>
+
+<div class="container">
+    <div class="book-a-call__content">
+       {% for block in section.blocks %}
+           <div class="book-a-call__content-blocks">
+                <h2 class="block-title">{{ block.settings.blockTitle }}</h2>
+                {% assign blockText = block.settings.blockText | newline_to_br | split: '<br />' %}
+                {% for i in blockText %}
+                    <p class="block-text">{{ i }}</p>
+                {% endfor %}
+           </div>
+       {% endfor %}
+    </div>
+    <div class="book-a-call__footer-banner" style="{% if section.settings.bannerImg %}background-image: url('{{ section.settings.bannerImg | img_url: 'master' }}'){% else %} background-color: {{ section.settings.bannerColor }}{% endif %}">
+        <h2 class="banner-header">{{ section.settings.bannerTitle }}</h2>
+        <button onclick="window.location.href= '{{ section.settings.buttonLink2 }}'" class="btn btn--green">{{ section.settings.buttonText2 }}</button>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Book a Call Page",
+    "settings": [
+        {
+            "type": "paragraph",
+            "content": "Header"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Header Title"
+        },
+        {
+            "type": "textarea",
+            "id": "subtitle",
+            "label": "Subtitle"
+        },
+        {
+            "type": "image_picker",
+            "id": "headerImg",
+            "label": "Header Image"
+        },
+        {
+            "type": "text",
+            "id": "buttonText1",
+            "label": "Button 1 Text"
+        },
+        {
+            "type": "url",
+            "id": "buttonLink1",
+            "label": "Button 1 Link"
+        },
+        {
+            "type": "paragraph",
+            "content": "Footer Banner"
+        },
+        {
+            "type": "text",
+            "id": "bannerTitle",
+            "label": "Banner Title"
+        },
+        {
+            "type": "image_picker",
+            "id": "bannerImg",
+            "label": "Banner Image"
+        },
+        {
+            "type": "color",
+            "id": "bannerColor",
+            "label": "Banner Color",
+            "info": "This will be overwritten if an image has been selected in 'Banner Image'"
+        },
+        {
+            "type": "text",
+            "id": "buttonText2",
+            "label": "Button 2 Text"
+        },
+        {
+            "type": "url",
+            "id": "buttonLink2",
+            "label": "Button 2 Link"
+        }
+    ],
+    "max_blocks": 2,
+    "blocks": [
+        {
+            "name": "content",
+            "type": "content",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "blockTitle",
+                    "label": "Block Title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "blockText",
+                    "label": "Block Text"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,94 @@
+<div class="featured-dealers blog-grid-posts">
+
+    <div class="container">
+
+        <div class="blog-grid-posts__title">
+            <h2>{{ section.settings.heading }}</h2>
+        </div>
+
+        <div class="blog-grid-posts__posts">
+            {%- for block in section.blocks -%}
+            <div class="card-article">
+
+                {% if block.settings.image %}
+                    <a href="#{{ section.settings.dealer_id }}" class="card-article__image">
+                        {{ vImage }}
+                        {{ block.settings.image | img_url: '800x500', crop: 'center' | img_tag: block.settings.image.title }}
+                    </a>
+                {% endif %}
+
+                <div class="card-article__content">
+                    <span class="card-article__date">{{ block.settings.general_location }}</span>
+                    <a href="#{{ section.settings.dealer_id }}"><h3>{{ block.settings.name }}</h3></a>
+                    
+                    <div class="card-article__excerpt">
+                        {{ block.settings.address }}
+                        {%- if block.settings.telephone != blank -%}
+                        <p>Tel: {{ block.settings.telephone }}</p>
+                        {%- endif -%}
+                    </div>
+                </div>
+            </div>
+            {%- endfor -%}
+        </div>
+
+    </div>
+
+</div>
+
+{% comment %} <script src="//maps.googleapis.com/maps/api/js?sensor=false&callback=initializeDealerMap&key=AIzaSyCisdaSViWmRUqcklfxHyX65IuBej0grN4" async></script> {% endcomment %}
+
+
+{%- schema -%}
+{
+    "name": "Featured Dealers",
+    "max_blocks": 3,
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "featured_dealer",
+            "name": "Featured Dealer",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "name",
+                    "label": "Name"
+                },
+                {
+                    "type": "richtext",
+                    "id": "address",
+                    "label": "Address"
+                },
+                {
+                    "type": "text",
+                    "id": "telephone",
+                    "label": "Telephone"
+                },
+                {
+                    "type": "text",
+                    "id": "general_location",
+                    "label": "General Location",
+                    "info": "Displays a small General Location"
+                },
+                {
+                    "type": "text",
+                    "id": "dealer_id",
+                    "label": "Dealer ID",
+                    "info": "This will link to the correct dealer in the results. You can find the dealer ID by visiting your [dealer editor](https://mutt-tools.cake.digital/dealers) and then editing the dealer you want to link to and copy the last part of the URL"
+                }
+            ]
+        }
+    ]
+}
+{%- endschema -%}

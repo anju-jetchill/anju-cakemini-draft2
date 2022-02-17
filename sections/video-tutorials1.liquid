@@ -1,0 +1,126 @@
+{% if section.settings.enable_checkbox %}
+<div class="flavourblastermaintenance">
+
+<div class="video-tutorials">
+  <div class="wk_heading">
+{% if section.settings.title != blank %}
+     <h3>{{ section.settings.title | escape }}</h3>     
+    
+    {% endif %}
+	</div>
+    <div class="video-tutorials__wrap">
+	
+        {%- for block in section.blocks -%}
+            
+            <div class="video-tutorials__card">
+
+            
+				
+				{%- if block.settings.imageDesktop != blank -%}
+                    <div class="video-tutorials__images" {% if block.settings.youtubeVideoId != blank -%}data-youtube-video="{{ block.settings.youtubeVideoId }}"{%- endif -%}>
+                        {%- render 'image-responsive', image: block.settings.imageDesktop, custom_alt : block.settings.heading -%}
+                    <a href="#"></a>
+              </div>
+                {%- endif -%}
+                <div class="video-tutorials__body">
+                    {%- if block.settings.heading != blank -%}
+                        <h3>{{ block.settings.heading }}</h3>                        
+                    {%- endif -%}
+                    {%- if block.settings.subTitle != blank -%}
+                        <h4 class="video-tutorials__subTitle">{{ block.settings.subTitle }}</h4>
+                    {%- endif -%}
+                    {%- if block.settings.description -%}
+                        <div class="video-tutorials__description">
+                            {{ block.settings.description }}
+                        </div>
+                    {%- endif -%}
+                </div>
+                {%- if block.settings.youtubeVideoId != blank -%}
+                    <div class="video-tutorials__buttons">
+                        <button class="btn btn--green" data-youtube-video="{{ block.settings.youtubeVideoId }}">View Tutorial</button>
+                    </div>
+                {%- endif -%}
+            </div>
+        {%- endfor -%}
+    </div>
+</div>
+</div>
+
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Heading 2",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "de": "Titel",
+        "en": "Heading",
+        "es": "Título",
+        "fr": "En-tête",
+        "it": "Heading",
+        "ja": "見出し",
+        "pt-BR": "Título"
+      },
+      "default": {
+        "de": "Textspalten mit Fotos",
+        "en": "Text columns with images",
+        "es": "Col. de texto con imagen",
+        "fr": "Colonnes de texte avec images",
+        "it": "Colonne di testo con foto",
+        "ja": "画像付きテキスト列",
+        "pt-BR": "Colunas de texto com imagens"
+      }
+    },
+{
+      "type": "checkbox",
+      "id": "enable_checkbox",
+      "label": "Enable section",
+      "default": false
+    }
+  ],
+	
+    "blocks": [
+        {
+            "name": "video",
+            "type": "video",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "imageDesktop",
+                    "label": "Image"
+                },
+				
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Heading"
+                },
+
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Description"
+                },
+
+                {
+                    "type": "text",
+                    "id": "subTitle",
+                    "label": "Sub Title"
+                },
+
+                {
+                    "type": "text",
+                    "id": "youtubeVideoId",
+                    "label": "YouTube Video ID"
+                }
+            ]
+        }
+    ]
+}
+
+{% endschema %}

@@ -1,0 +1,174 @@
+<style>
+  .banner-prokit-section-1 .video-section{
+    background-color:#fff !important;
+  }
+</style>
+<div class="banner-prokit-section-1">
+        <div class="banner-section">
+          {%- if section.settings.miniimage -%}
+    {%- render 'image-responsive', image : section.settings.miniimage -%}
+	   {%- endif -%}
+	        {% if section.settings.title !=blank %}
+            <div class="buy-now">
+                <a href="#">{{ section.settings.title }}</a>
+            </div>
+			 {% endif %}
+        </div>
+        <div class="video-section">
+           <div class="landing-section-1 landing-section-1--align-left wk-videosection">
+<div class="landing-section-1__wrap">
+<div class="landing-section-1__images">
+<div class="wrapper">
+{% if section.settings.videourl !=blank %}
+<video id="myvideo" class="video responsive-iframe video-js vjs-default-skin vjs-big-play-centered" controls="controls" preload="auto" data-setup="{}"
+       poster="https://cdn.shopify.com/s/files/1/1455/0700/files/image-005.jpg">
+<source src="{{ section.settings.videourl }}" type="video/mp4" />
+</video>
+ {% endif %}
+</div>
+</div>
+</div>
+</div>
+        </div>
+    </div>
+    <!-- section-2 -->
+    <div class="prokit-section-2">
+        <div class="pro-kit-sec-2-pic">
+            {%- if section.settings.section2image -%}
+    {%- render 'image-responsive', image : section.settings.section2image -%}
+	   {%- endif -%}
+        </div>
+        <div class="pro-kit-content">
+          <p>Meet the IN crowd</p>
+          <p>We're raising the bar on your home cocktails one aroma filled bubble at a time.</p>
+          <p>Flavour Blaster don't do average parties, and neither should you!</p>
+		  <p>Due to the incredible success of our professional bar tool which made its debut in 2019. We've 
+            developed a product that allows aspiring home bartenders just like you to garnish your cocktails
+            in brand new ways.</p>
+  		  <p>Like to impress with the best? Now you can blow your very own smoke filled bubbles. And infuse aromas
+            onto cocktails, mocktails, food and desserts from the comfort of your own home.</p>
+		  <p>Living room by day, lounge by night.</p>
+		  <p>Our new release is guaranteed to add excitement and curiosity to any soiree.</p>
+		  <p>It's time to pull the trigger.</p>
+          
+          <h3><span class="small-stature">
+		  {% if section.settings.sec2subheading!=blank %}
+          {{ section.settings.sec2subheading }}
+			 {%- endif -%}
+		  </h3>
+        </div>
+    </div>
+    <!-- section-3 -->
+    <div class="prokit-section-3">
+        <div class="banner-section">
+		{%- if section.settings.section3image -%}
+    {%- render 'image-responsive', image : section.settings.section3image -%}
+	   {%- endif -%}
+            <div class="click-here">
+			 {% if section.settings.sec3text!=blank %}
+                 <p> {{ section.settings.sec3text }}</p>
+				 {%- endif -%}
+				 {% if section.settings.sec3buttontext!=blank %}
+               {{ section.settings.sec3buttontext }}
+				 {%- endif -%}
+            </div>
+        </div>
+        <div class="pro-kit-content">
+		{%- if section.settings.section3rightimage -%}
+    {%- render 'image-responsive', image : section.settings.section3rightimage -%}
+	   {%- endif -%}>
+    </div>
+    </div>
+    <!-- section-4 -->
+    <div class="prokit-section-4">
+        <div class="prokit-section-4-content">
+          <p> WE  DON'T DO AVERAGE PARTIES<br> <span class="and-neither">AND NEITHER SHOULD YOU</span></p>
+          </div>
+    </div>
+        <!-- section-5 -->
+        <div class="prokit-section-5">
+            <div class="prokit-section-5-content">
+                Pay later with <img src="https://cdn.shopify.com/s/files/1/1455/0700/files/pay.png" alt="">
+            </div>
+        </div>
+
+      <script src="https://vjs.zencdn.net/7.17.0/video.min.js"></script>
+
+{% schema %}
+{
+  "name": "Mini Kit",
+  "settings": [
+    
+        {
+            "type": "image_picker",
+            "id": "miniimage",
+            "label": "Mini Image"
+        },
+		
+		
+{
+                    "type": "text",
+                    "id": "title",
+                    "label": "Mini Button Text"
+                   
+                },
+				{
+            "type": "url",
+            "id": "videourl",
+            "label": "Video Url"
+        },
+				 {
+            "type": "image_picker",
+            "id": "section2image",
+            "label": "Section2 image"
+        },
+		{
+                    "type": "richtext",
+                    "id": "sec2text",
+                    "label": "Section2 Text"
+                   
+                },
+				{
+                    "type": "text",
+                    "id": "sec2subheading",
+                    "label": "Section 2 Subheading"
+                   
+                },
+				
+				{
+            "type": "image_picker",
+            "id": "section3image",
+            "label": "Section3 image"
+        },
+		{
+                    "type": "text",
+                    "id": "sec3text",
+                    "label": "Section3 Text"
+                   
+                },
+				{
+                    "type": "richtext",
+                    "id": "sec3buttontext",
+                    "label": "Section3 Button Text"
+                   
+                },
+				{
+				"type": "image_picker",
+            "id": "section3rightimage",
+            "label": "Section3 Right image"
+        },
+		{
+                    "type": "text",
+                    "id": "sec4text",
+                    "label": "Section4 Text"
+                   
+                }
+
+]
+	
+  }
+
+{% endschema %}
+
+
+

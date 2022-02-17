@@ -1,0 +1,46 @@
+{%- render 'stay-connected', section : section -%}
+
+{% schema %}
+{
+    "name": "Stay Connected",
+    "settings": [
+        
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "STAY CONNECTED"
+        },
+
+        {
+            "type": "html",
+            "id": "klaviyoHtml",
+            "label": "Klaviyo HTML",
+            "info": "Add the Klaviyo HTML here"
+        },
+
+        {
+            "type": "header",
+            "content": "Background Image"
+        },
+
+        {
+            "type": "image_picker",
+            "id": "imageDesktop",
+            "label": "Desktop"
+        },
+
+        {
+            "type": "image_picker",
+            "id": "imageMobile",
+            "label": "Mobile"
+        }
+    ],
+    "presets": [
+        {
+            "category": "Layout",
+            "name":"Stay Connected"
+        }
+    ]
+}
+{% endschema %}

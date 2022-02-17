@@ -1,0 +1,122 @@
+{%- for block in section.blocks -%}
+    {%- render 'team-member', block : block -%}    
+{%- endfor -%}
+
+{% schema %}
+    {
+        "name": "Team member",
+        "blocks" : [
+        
+            {
+                "name" : "Team Member",
+                "type" : "team-member",
+                "settings": [
+
+                    {
+                        "type": "checkbox",
+                        "id": "showBackground",
+                        "label": "Show Background",
+                        "default": true
+                    },
+
+                    {
+                        "type": "checkbox",
+                        "id": "showBreadcrumbs",
+                        "label": "Show Breadcrumbs",
+                        "default": false
+                    },
+
+                    {
+                        "type": "checkbox",
+                        "id": "flipDirection",
+                        "label": "Flip Direction",
+                        "default": false
+                    },
+
+                    {
+                        "type": "image_picker",
+                        "id": "imageDesktop",
+                        "label": "Image"
+                    },
+
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title",
+                        "default": "Custom Title"
+                    },
+                    {
+                        "type": "text",
+                        "id": "subTitle",
+                        "label": "Sub Title",
+                        "default": "Add a Sub Title"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "text",
+                        "label": "Text"
+                    },
+
+                    {
+                        "type": "header",
+                        "content": "Questions"
+                    },
+
+                    {
+                        "type": "paragraph",
+                        "content": "Question 1"
+                    },
+                    {
+                        "type": "text",
+                        "id": "favourite1Question",
+                        "label": "Question",
+                        "default": "Favourite Flavour Blaster"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "favourite1Answer",
+                        "label": "Answer",
+                        "default": "<p>Lorem Ipsum</p>"
+                    },
+
+
+                    {
+                        "type": "paragraph",
+                        "content": "Question 2"
+                    },
+                    {
+                        "type": "text",
+                        "id": "favourite2Question",
+                        "label": "Question",
+                        "default": "Favourite Cocktail"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "favourite2Answer",
+                        "label": "Answer",
+                        "default": "<p>Lorem Ipsum</p>"
+                    },
+
+
+                    {
+                        "type": "paragraph",
+                        "content": "Question 3"
+                    },
+                    {
+                        "type": "text",
+                        "id": "favourite3Question",
+                        "label": "Question",
+                        "default": "Favourite Bar"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "favourite3Answer",
+                        "label": "Answer",
+                        "default": "<p>Lorem Ipsum</p>"
+                    }
+
+                ]
+            }
+        ]
+    }
+{% endschema %}

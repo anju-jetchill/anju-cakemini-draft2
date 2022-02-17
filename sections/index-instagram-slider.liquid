@@ -1,0 +1,29 @@
+{%- render 'instagram-slider' -%}
+
+{% schema %}
+{
+    "name": "Instagram Slider",
+    "settings": [
+        {
+            "type": "text",
+            "id": "subTitle",
+            "label": "Sub-title",
+            "default": "INSTAGRAM"
+        },
+
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "STAY CONNECTED"
+        }
+    ],
+
+    "presets": [
+        {
+            "category": "slider",
+            "name":"Instagram"
+        }
+    ]
+}
+{% endschema %}
