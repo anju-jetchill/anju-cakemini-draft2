@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+  <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
+        <meta name="referrer" content="origin">
+    
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-MQT7PWF');</script>
+        <!-- End Google Tag Manager -->
+
+        <title>{{ page_title }}</title>
+
+        {{ content_for_header }}
+
+        {{ checkout_stylesheets }}
+        {{ checkout_scripts }}
+        {% include "loyalty-lion" %}
+
+        <script>lion.configure({ checkout: true })</script>
+       <style>
+      #zonos {
+   margin-bottom: 28px;
+} 
+    </style>
+    </head>
+    
+    <body>
+        {{ skip_to_content_link }}
+
+        <header class="banner" data-header role="banner">
+            <div class="wrap">
+                {{ content_for_logo }}
+            </div>
+        </header>
+    
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MQT7PWF"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+
+        {{ order_summary_toggle }}
+
+        <div class="content" data-content>
+            <div class="wrap">
+                <div class="main">
+                    <header class="main__header" role="banner">
+                        {{ content_for_logo }}
+                        {{ breadcrumb }}
+                        {{ alternative_payment_methods }}
+                    </header>
+                    <main class="main__content" role="main">
+                        {{ content_for_layout }}
+                    </main>
+                    <footer class="main__footer" role="contentinfo">
+                        {{ content_for_footer }}
+                    </footer>
+                </div>
+                <aside class="sidebar" role="complementary">
+                    <div class="sidebar__header">
+                        {{ content_for_logo }}
+                    </div>
+                    <div class="sidebar__content">
+                        {{ content_for_order_summary }}
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        {%- render 'venue-dropdown-script' -%}
+
+        {{ tracking_code }}
+      
+           <script src="https://hello.zonos.com/hello.js?siteKey=2J9O8EKJR75S"></script>
+  
+                                                                    
+   <script>    
+  function znDutyTaxEstimateOnDetailPage() {
+      {% if product and product.price %}
+        zonos.quote({
+          items: [{ price: "{{ product.price | money_without_currency }}", name: "{{product.title | replace: '"', '\"'}}", url: "{{ shop.secure_url }}{{ product.url }}", image: "https:{{ product.featured_image | product_img_url: 'medium' }}"}],
+          currencyCode: '{{ shop.currency }}'
+                   
+        });
+                  
+    {% endif %}
+  }
+  
+                  
+ function znDutyTaxEstimateOnCartPage() {
+    if (window.location.href.indexOf("cart") > -1) {
+      zonos.quote({
+        items: [
+          {% for item in cart.items %}
+          { price: "{{ item.price | money_without_currency }}", quantity: {{item.quantity}}, name: "{{ item.title | replace: '"', '\"'}}", url: "{{ shop.secure_url }}{{item.url}}", image: "https:{{item.image| product_img_url: 'medium'}}"},
+          {% endfor %}
+        ],currencyCode: '{{ shop.currency }}'});
+    }
+  }
+
+  znDutyTaxEstimateOnDetailPage();
+  znDutyTaxEstimateOnCartPage();
+</script>  
+      
+    </body>
+</html>

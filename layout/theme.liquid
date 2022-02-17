@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="{{ shop.locale }}">
+    <head>
+ {%- render 'layouthub_header' -%}
+
+<script>
+LUX=(function(){var a=("undefined"!==typeof(LUX)&&"undefined"!==typeof(LUX.gaMarks)?LUX.gaMarks:[]);var d=("undefined"!==typeof(LUX)&&"undefined"!==typeof(LUX.gaMeasures)?LUX.gaMeasures:[]);var j="LUX_start";var k=window.performance;var l=("undefined"!==typeof(LUX)&&LUX.ns?LUX.ns:(Date.now?Date.now():+(new Date())));if(k&&k.timing&&k.timing.navigationStart){l=k.timing.navigationStart}function f(){if(k&&k.now){return k.now()}var o=Date.now?Date.now():+(new Date());return o-l}function b(n){if(k){if(k.mark){return k.mark(n)}else{if(k.webkitMark){return k.webkitMark(n)}}}a.push({name:n,entryType:"mark",startTime:f(),duration:0});return}function m(p,t,n){if("undefined"===typeof(t)&&h(j)){t=j}if(k){if(k.measure){if(t){if(n){return k.measure(p,t,n)}else{return k.measure(p,t)}}else{return k.measure(p)}}else{if(k.webkitMeasure){return k.webkitMeasure(p,t,n)}}}var r=0,o=f();if(t){var s=h(t);if(s){r=s.startTime}else{if(k&&k.timing&&k.timing[t]){r=k.timing[t]-k.timing.navigationStart}else{return}}}if(n){var q=h(n);if(q){o=q.startTime}else{if(k&&k.timing&&k.timing[n]){o=k.timing[n]-k.timing.navigationStart}else{return}}}d.push({name:p,entryType:"measure",startTime:r,duration:(o-r)});return}function h(n){return c(n,g())}function c(p,o){for(i=o.length-1;i>=0;i--){var n=o[i];if(p===n.name){return n}}return undefined}function g(){if(k){if(k.getEntriesByType){return k.getEntriesByType("mark")}else{if(k.webkitGetEntriesByType){return k.webkitGetEntriesByType("mark")}}}return a}return{mark:b,measure:m,gaMarks:a,gaMeasures:d}})();LUX.ns=(Date.now?Date.now():+(new Date()));LUX.ac=[];LUX.cmd=function(a){LUX.ac.push(a)};LUX.init=function(){LUX.cmd(["init"])};LUX.send=function(){LUX.cmd(["send"])};LUX.addData=function(a,b){LUX.cmd(["addData",a,b])};LUX_ae=[];window.addEventListener("error",function(a){LUX_ae.push(a)});LUX_al=[];if("function"===typeof(PerformanceObserver)&&"function"===typeof(PerformanceLongTaskTiming)){var LongTaskObserver=new PerformanceObserver(function(c){var b=c.getEntries();for(var a=0;a<b.length;a++){var d=b[a];LUX_al.push(d)}});try{LongTaskObserver.observe({type:["longtask"]})}catch(e){}};
+</script>
+<script src="https://cdn.speedcurve.com/js/lux.js?id=4124501729" async defer crossorigin="anonymous"></script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MQT7PWF');</script>
+<!-- End Google Tag Manager -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="canonical" href="{{ canonical_url }}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <title>
+            {{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+        </title>
+
+        {%- if page_description -%}
+            <meta name="description" content="{{ page_description | escape }}" />
+        {%- endif -%}
+
+        {%- if settings.favicon != blank -%}
+            <link rel="shortcut icon" href="{{ settings.favicon | img_url: '60x' }}">            
+        {%- endif -%}
+
+        {{ content_for_header }}
+
+        <link async rel="stylesheet" type="text/css" href="{{ 'main.min.css' | asset_url  }}">
+        <link async rel="stylesheet" type="text/css" href="https://use.typekit.net/sus0wit.css" media="print" onload="this.media='all'">
+
+        {%- render "loyalty-lion" -%}
+
+    {% include 'scapp-customerinfo' %} 
+      
+ <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" /> 
+      
+{% include 'dual-price' %}{% include 'dual-price' %}</head>
+
+    <body class="template-{{ template.name }}{%- if template.suffix -%}__{{ template.suffix }}{%- endif %} {% if customer -%}customer--isLoggedIn{%- endif %}">
+        <script type="text/javascript">
+            window.addEventListener('DOMContentLoaded', function() {
+                window.Shopify.money_format = {{ shop.money_format | json }};
+            });
+        </script>
+    
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MQT7PWF"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+        {%- render 'richsnippet-organization' -%}
+        {%- render 'richsnippet-website' -%}
+        {%- render 'richsnippet-breadcrumbs' -%}
+        {%- render 'richsnippet-faqs' -%}
+
+        {%- if request.page_type contains '/addresses' -%}
+            {%- render 'addresses-add-popup' -%}
+            {%- render 'addresses-edit-popup' -%}
+        {%- endif -%}
+
+        {%- render 'youtube-popup' -%}
+
+        {%- unless page.handle == 'rewards' -%}
+            {%- section 'usp-slider-single-column' -%}            
+        {%- endunless -%}
+
+        {%- section 'header' -%}
+
+        <main>
+            <!--LayoutHub-Workspace-Start-->{{ content_for_layout }}<!--LayoutHub-Workspace-End-->
+        </main>
+        
+        {%- render 'footer' -%}
+        {%- render 'cart-drawer' -%}
+        {%- render 'avatar-popup' -%}
+        {%- render 'cookie-notice' -%}
+
+        {%- render 'js-globals' -%}
+
+        <script defer src="{{ 'site.min.js' | asset_url  }}"></script>
+        <script defer src="https://kit.fontawesome.com/6bc1f3c824.js" crossorigin="anonymous"></script>
+
+        {% if shop.url == "https://us.flavourblaster.com/" %}
+            {%- unless template.directory == 'customers' -%}
+                {% section 'storeselection-popup' %}
+            {%- endunless -%}
+        {% endif %}
+
+        {%- if request.page_type contains 'customers/' -%}
+            <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+        {%- endif -%}
+                
+{%- render 'layouthub_footer' -%} 
+ <script>window.KlarnaThemeGlobals={};{%case template.name%} {%when"product"%} window.KlarnaThemeGlobals.data_purchase_amount={{product.first_available_variant.price}};window.KlarnaThemeGlobals.productVariants={{product.variants|json}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%when"cart"%} window.KlarnaThemeGlobals.data_purchase_amount={{cart.total_price}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%endcase%}</script>
+</body>
+</html>
